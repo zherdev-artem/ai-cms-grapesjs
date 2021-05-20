@@ -9,5 +9,8 @@ return [
 		]
 	],
 	'jsonapi' => [
+        'resources' => [
+            'category' => 'category',
+        ]
 	],
 ];

@@ -20,6 +20,9 @@
 			"text": "grapesjs.js",
 			"path": "themes/"
 		},{
+			"text": "category.js",
+			"path": "themes/"
+		},{
 			"text": "grapesjs-ext.js",
 			"path": "themes/"
 		},{
