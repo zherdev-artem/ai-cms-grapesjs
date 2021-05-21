@@ -20,6 +20,12 @@
 			"text": "grapesjs.js",
 			"path": "themes/"
 		},{
+			"text": "admin-aux.js",
+			"path": "themes/"
+		},{
+			"text": "cms.js",
+			"path": "themes/"
+		},{
 			"text": "category.js",
 			"path": "themes/"
 		},{

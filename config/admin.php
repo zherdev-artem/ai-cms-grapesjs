@@ -6,13 +6,28 @@ return [
 			'domains' => [
 				'text' => 'text',
 				'media' => 'media',
+                'category' => 'category'
 			],
 			'subparts' => [
 				'content' => 'content',
 				'seo' => 'seo',
 				'media' => 'media',
+                'category' => 'category'
 			],
 		],
+        'category' => [
+            'domains' => [
+                'media' => 'media',
+                'media/property' => 'media/property',
+				'text' => 'text',
+                'cms' => 'cms'
+            ],
+            'subparts' => [
+                'cms' => 'cms',
+				'media' => 'media',
+				'text' => 'text'
+			],
+        ],
 		'navbar' => [
 			45 => [
                 '' => 'cms',
@@ -20,7 +35,8 @@ return [
                 20 => 'category'
             ],
 			70 => [
-				45 => 'type/cms/lists'
+				45 => 'type/cms/lists',
+                50 => 'type/category/lists',
 			]
 		],
 		'resource' => [
