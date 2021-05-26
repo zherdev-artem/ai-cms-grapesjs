@@ -11,6 +11,7 @@ return [
 	'jsonapi' => [
         'resources' => [
             'category' => 'category',
+            'post' => 'post'
         ]
 	],
 ];

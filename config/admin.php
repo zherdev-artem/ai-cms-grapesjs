@@ -6,6 +6,17 @@ return [
 			'domains' => [
 				'text' => 'text',
 				'media' => 'media',
+			],
+			'subparts' => [
+				'content' => 'content',
+				'seo' => 'seo',
+				'media' => 'media',
+			],
+		],
+        'post' => [
+			'domains' => [
+				'text' => 'text',
+				'media' => 'media',
                 'category' => 'category'
 			],
 			'subparts' => [
@@ -20,10 +31,10 @@ return [
                 'media' => 'media',
                 'media/property' => 'media/property',
 				'text' => 'text',
-                'cms' => 'cms'
+                'post' => 'post'
             ],
             'subparts' => [
-                'cms' => 'cms',
+                'post' => 'post',
 				'media' => 'media',
 				'text' => 'text'
 			],
@@ -32,7 +43,8 @@ return [
 			45 => [
                 '' => 'cms',
                 10 => 'cms',
-                20 => 'category'
+                20 => 'post',
+                30 => 'category'
             ],
 			70 => [
 				45 => 'type/cms/lists',
@@ -50,6 +62,23 @@ return [
 				'groups' => ['admin', 'editor', 'super'],
 
 				/** admin/jqadm/resource/cms/key
+				 * Shortcut key to switch to the CMS panel by using the keyboard
+				 *
+				 * @param string Single character in upper case
+				 * @since 2021.04
+				 */
+				'key' => 'M',
+			],
+            'post' => [
+				/** admin/jqadm/resource/post/groups
+				 * List of user groups that are allowed to access the CMS panel
+				 *
+				 * @param array List of user group names
+				 * @since 2021.04
+				 */
+				'groups' => ['admin', 'editor', 'super'],
+
+				/** admin/jqadm/resource/post/key
 				 * Shortcut key to switch to the CMS panel by using the keyboard
 				 *
 				 * @param string Single character in upper case

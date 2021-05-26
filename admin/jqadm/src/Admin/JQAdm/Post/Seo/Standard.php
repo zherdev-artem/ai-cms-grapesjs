@@ -2,19 +2,19 @@
 
 /**
  * @license LGPLv3, http://opensource.org/licenses/LGPL-3.0
- * @copyright Aimeos (aimeos.org), 2015-2021
+ * @copyright Aimeos (aimeos.org), 2021
  * @package Admin
  * @subpackage JQAdm
  */
 
 
-namespace Aimeos\Admin\JQAdm\Cms\Category;
+namespace Aimeos\Admin\JQAdm\Post\Seo;
 
-sprintf( 'category' ); // for translation
+sprintf( 'seo' ); // for translation
 
 
 /**
- * Default implementation of cms category JQAdm client.
+ * Default implementation of post SEO JQAdm client.
  *
  * @package Admin
  * @subpackage JQAdm
@@ -23,14 +23,14 @@ class Standard
 	extends \Aimeos\Admin\JQAdm\Common\Admin\Factory\Base
 	implements \Aimeos\Admin\JQAdm\Common\Admin\Factory\Iface
 {
-	/** admin/jqadm/cms/category/name
-	 * Name of the category subpart used by the JQAdm cms implementation
+	/** admin/jqadm/post/seo/name
+	 * Name of the SEO subpart used by the JQAdm post implementation
 	 *
-	 * Use "Myname" if your class is named "\Aimeos\Admin\Jqadm\Cms\Category\Myname".
+	 * Use "Myname" if your class is named "\Aimeos\Admin\Jqadm\Post\Text\Myname".
 	 * The name is case-sensitive and you should avoid camel case names like "MyName".
 	 *
 	 * @param string Last part of the JQAdm class name
-	 * @since 2016.04
+	 * @since 2020.10
 	 * @category Developer
 	 */
 
@@ -43,9 +43,8 @@ class Standard
 	public function copy() : ?string
 	{
 		$view = $this->getObject()->addData( $this->getView() );
-
-		$view->categoryData = $this->toArray( $view->item, true );
-		$view->categoryBody = parent::copy();
+		$view->seoData = $this->toArray( $view->item, true );
+		$view->seoBody = parent::copy();
 
 		return $this->render( $view );
 	}
@@ -60,14 +59,16 @@ class Standard
 	{
 		$view = $this->getObject()->addData( $this->getView() );
 		$siteid = $this->getContext()->getLocale()->getSiteId();
-		$data = $view->param( 'category', [] );
+		$data = $view->param( 'seo', [] );
 
-		foreach( $view->value( $data, 'category.lists.id', [] ) as $idx => $value ) {
-			$data['category.lists.siteid'][$idx] = $siteid;
+		foreach( $data as $idx => $entry )
+		{
+			$data[$idx]['post.lists.siteid'] = $siteid;
+			$data[$idx]['text.siteid'] = $siteid;
 		}
 
-		$view->categoryData = $data;
-		$view->categoryBody = parent::create();
+		$view->seoData = $data;
+		$view->seoBody = parent::create();
 
 		return $this->render( $view );
 	}
@@ -81,31 +82,14 @@ class Standard
 	public function delete() : ?string
 	{
 		parent::delete();
-		$view = $this->getView();
 
-		$manager = \Aimeos\MShop::create( $this->getContext(), 'category/lists' );
+		$item = $this->getView()->item;
 
-		$search = $manager->filter();
-		$expr = array(
-			$search->compare( '==', 'category.lists.refid', $view->param( 'id' ) ),
-			$search->compare( '==', 'category.lists.domain', 'cms' )
-		);
-		$search->setConditions( $search->and( $expr ) );
-		$search->slice( 0, 0x7fffffff );
+		$listItems = $item->getListItems( 'text', null, null, false )->filter( function( $item ) {
+			return $item->getRefItem() === null || $item->getRefItem()->getType() !== 'content';
+		} );
 
-		$start = 0;
-
-		do
-		{
-			$search->slice( $start );
-
-			$result = $manager->search( $search );
-			$manager->delete( $result->toArray() );
-
-			$count = count( $result );
-			$start += $count;
-		}
-		while( $count >= $search->getLimit() );
+		$item->deleteListItems( $listItems, true );
 
 		return null;
 	}
@@ -119,8 +103,8 @@ class Standard
 	public function get() : ?string
 	{
 		$view = $this->getObject()->addData( $this->getView() );
-		$view->categoryData = $this->toArray( $view->item );
-		$view->categoryBody = parent::get();
+		$view->seoData = $this->toArray( $view->item );
+		$view->seoBody = parent::get();
 
 		return $this->render( $view );
 	}
@@ -135,21 +119,8 @@ class Standard
 	{
 		$view = $this->getView();
 
-		$manager = \Aimeos\MShop::create( $this->getContext(), 'category/lists' );
-		$manager->begin();
-
-		try
-		{
-			$this->fromArray( $view->item, $view->param( 'category', [] ) );
-			$view->categoryBody = parent::save();
-
-			$manager->commit();
-		}
-		catch( \Exception $e )
-		{
-			$manager->rollback();
-			throw $e;
-		}
+		$view->item = $this->fromArray( $view->item, $view->param( 'seo', [] ) );
+		$view->seoBody = parent::save();
 
 		return null;
 	}
@@ -164,8 +135,8 @@ class Standard
 	 */
 	public function getSubClient( string $type, string $name = null ) : \Aimeos\Admin\JQAdm\Iface
 	{
-		/** admin/jqadm/cms/category/decorators/excludes
-		 * Excludes decorators added by the "common" option from the cms JQAdm client
+		/** admin/jqadm/post/seo/decorators/excludes
+		 * Excludes decorators added by the "common" option from the post JQAdm client
 		 *
 		 * Decorators extend the functionality of a class by adding new aspects
 		 * (e.g. log what is currently done), executing the methods of the underlying
@@ -176,22 +147,22 @@ class Standard
 		 * "admin/jqadm/common/decorators/default" before they are wrapped
 		 * around the JQAdm client.
 		 *
-		 *  admin/jqadm/cms/category/decorators/excludes = array( 'decorator1' )
+		 *  admin/jqadm/post/seo/decorators/excludes = array( 'decorator1' )
 		 *
 		 * This would remove the decorator named "decorator1" from the list of
 		 * common decorators ("\Aimeos\Admin\JQAdm\Common\Decorator\*") added via
 		 * "admin/jqadm/common/decorators/default" to the JQAdm client.
 		 *
 		 * @param array List of decorator names
-		 * @since 2016.01
+		 * @since 2020.10
 		 * @category Developer
 		 * @see admin/jqadm/common/decorators/default
-		 * @see admin/jqadm/cms/category/decorators/global
-		 * @see admin/jqadm/cms/category/decorators/local
+		 * @see admin/jqadm/post/seo/decorators/global
+		 * @see admin/jqadm/post/seo/decorators/local
 		 */
 
-		/** admin/jqadm/cms/category/decorators/global
-		 * Adds a list of globally available decorators only to the cms JQAdm client
+		/** admin/jqadm/post/seo/decorators/global
+		 * Adds a list of globally available decorators only to the post JQAdm client
 		 *
 		 * Decorators extend the functionality of a class by adding new aspects
 		 * (e.g. log what is currently done), executing the methods of the underlying
@@ -201,21 +172,21 @@ class Standard
 		 * This option allows you to wrap global decorators
 		 * ("\Aimeos\Admin\JQAdm\Common\Decorator\*") around the JQAdm client.
 		 *
-		 *  admin/jqadm/cms/category/decorators/global = array( 'decorator1' )
+		 *  admin/jqadm/post/seo/decorators/global = array( 'decorator1' )
 		 *
 		 * This would add the decorator named "decorator1" defined by
 		 * "\Aimeos\Admin\JQAdm\Common\Decorator\Decorator1" only to the JQAdm client.
 		 *
 		 * @param array List of decorator names
-		 * @since 2016.01
+		 * @since 2020.10
 		 * @category Developer
 		 * @see admin/jqadm/common/decorators/default
-		 * @see admin/jqadm/cms/category/decorators/excludes
-		 * @see admin/jqadm/cms/category/decorators/local
+		 * @see admin/jqadm/post/seo/decorators/excludes
+		 * @see admin/jqadm/post/seo/decorators/local
 		 */
 
-		/** admin/jqadm/cms/category/decorators/local
-		 * Adds a list of local decorators only to the cms JQAdm client
+		/** admin/jqadm/post/seo/decorators/local
+		 * Adds a list of local decorators only to the post JQAdm client
 		 *
 		 * Decorators extend the functionality of a class by adding new aspects
 		 * (e.g. log what is currently done), executing the methods of the underlying
@@ -223,21 +194,21 @@ class Standard
 		 * modify what is returned to the caller.
 		 *
 		 * This option allows you to wrap local decorators
-		 * ("\Aimeos\Admin\JQAdm\Cms\Decorator\*") around the JQAdm client.
+		 * ("\Aimeos\Admin\JQAdm\Post\Decorator\*") around the JQAdm client.
 		 *
-		 *  admin/jqadm/cms/category/decorators/local = array( 'decorator2' )
+		 *  admin/jqadm/post/seo/decorators/local = array( 'decorator2' )
 		 *
 		 * This would add the decorator named "decorator2" defined by
-		 * "\Aimeos\Admin\JQAdm\Cms\Decorator\Decorator2" only to the JQAdm client.
+		 * "\Aimeos\Admin\JQAdm\Post\Decorator\Decorator2" only to the JQAdm client.
 		 *
 		 * @param array List of decorator names
-		 * @since 2016.01
+		 * @since 2020.10
 		 * @category Developer
 		 * @see admin/jqadm/common/decorators/default
-		 * @see admin/jqadm/cms/category/decorators/excludes
-		 * @see admin/jqadm/cms/category/decorators/global
+		 * @see admin/jqadm/post/seo/decorators/excludes
+		 * @see admin/jqadm/post/seo/decorators/global
 		 */
-		return $this->createSubClient( 'cms/category/' . $type, $name );
+		return $this->createSubClient( 'post/seo/' . $type, $name );
 	}
 
 
@@ -248,8 +219,8 @@ class Standard
 	 */
 	protected function getSubClientNames() : array
 	{
-		/** admin/jqadm/cms/category/subparts
-		 * List of JQAdm sub-clients rendered within the cms category section
+		/** admin/jqadm/post/seo/subparts
+		 * List of JQAdm sub-clients rendered within the post seo section
 		 *
 		 * The output of the frontend is composed of the code generated by the JQAdm
 		 * clients. Each JQAdm client can consist of serveral (or none) sub-clients
@@ -278,111 +249,140 @@ class Standard
 		 * design.
 		 *
 		 * @param array List of sub-client names
-		 * @since 2016.01
+		 * @since 2020.10
 		 * @category Developer
 		 */
-		return $this->getContext()->getConfig()->get( 'admin/jqadm/cms/category/subparts', [] );
+		return $this->getContext()->getConfig()->get( 'admin/jqadm/post/seo/subparts', [] );
 	}
 
 
 	/**
-	 * Returns the category items for the given category list items
+	 * Adds the required data used in the seo template
 	 *
-	 * @param \Aimeos\Map $listItems List of items implementing \Aimeos\Common\Item\Lists\Iface
-	 * @return \Aimeos\Map List of category IDs as keys and items implementing \Aimeos\Category\Item\Iface
+	 * @param \Aimeos\MW\View\Iface $view View object
+	 * @return \Aimeos\MW\View\Iface View object with assigned parameters
 	 */
-	protected function getCategoryItems( \Aimeos\Map $listItems ) : \Aimeos\Map
+	public function addData( \Aimeos\MW\View\Iface $view ) : \Aimeos\MW\View\Iface
 	{
-		$ids = $listItems->getParentId()->toArray();
-		$manager = \Aimeos\MShop::create( $this->getContext(), 'category' );
+		$context = $this->getContext();
 
-		$search = $manager->filter();
-		$search->setConditions( $search->compare( '==', 'category.id', $ids ) );
+		$textTypeManager = \Aimeos\MShop::create( $context, 'text/type' );
+		$listTypeManager = \Aimeos\MShop::create( $context, 'post/lists/type' );
 
-		return $manager->search( $search );
-	}
+		$search = $textTypeManager->filter( true )->slice( 0, 10000 );
+		$search->add( $search->and( [
+			$search->is( 'text.type.domain', '==', 'post' ),
+			$search->is( 'text.type.code', '!=', 'content' )
+		] ) );
+		$search->setSortations( [$search->sort( '+', 'text.type.position' )] );
 
+		$listSearch = $listTypeManager->filter( true )->slice( 0, 10000 );
+		$listSearch->setConditions( $listSearch->compare( '==', 'post.lists.type.domain', 'text' ) );
+		$listSearch->setSortations( [$listSearch->sort( '+', 'post.lists.type.position' )] );
 
-	/**
-	 * Returns the category list items for the given cms ID
-	 *
-	 * @param string $prodid Unique cms ID
-	 * @return \Aimeos\Map Associative list of category list IDs as keys and list items as values
-	 */
-	protected function getListItems( string $prodid ) : \Aimeos\Map
-	{
-		$manager = \Aimeos\MShop::create( $this->getContext(), 'category/lists' );
+		$view->seoTypes = $textTypeManager->search( $search );
+		$view->seoListTypes = $listTypeManager->search( $listSearch );
 
-		$search = $manager->filter()->slice( 0, 0x7fffffff );
-		$expr = array(
-			$search->compare( '==', 'category.lists.refid', $prodid ),
-			$search->compare( '==', 'category.lists.domain', 'cms' ),
-		);
-		$search->setConditions( $search->and( $expr ) );
-
-		return $manager->search( $search );
+		return $view;
 	}
 
 
 	/**
 	 * Creates new and updates existing items using the data array
 	 *
-	 * @param \Aimeos\MShop\Cms\Item\Iface $item Cms item object without referenced domain items
+	 * @param \Aimeos\MShop\Post\Item\Iface $item Post item object without referenced domain items
 	 * @param array $data Data array
+	 * @return \Aimeos\MShop\Post\Item\Iface Modified post item
 	 */
-	protected function fromArray( \Aimeos\MShop\Cms\Item\Iface $item, array $data )
+	protected function fromArray( \Aimeos\MShop\Post\Item\Iface $item, array $data ) : \Aimeos\MShop\Post\Item\Iface
 	{
-		$manager = \Aimeos\MShop::create( $this->getContext(), 'category/lists' );
-		$listItems = $this->getListItems( $item->getId() );
-		$list = [];
+		$context = $this->getContext();
+
+		$textManager = \Aimeos\MShop::create( $context, 'text' );
+		$listManager = \Aimeos\MShop::create( $context, 'post/lists' );
+
+		$listItems = $item->getListItems( 'text', null, null, false )->filter( function( $item ) {
+			return $item->getRefItem() === null || $item->getRefItem()->getType() !== 'content';
+		} );
+
 
 		foreach( $data as $idx => $entry )
 		{
-			if( isset( $listItems[$entry['category.lists.id']] ) ) {
-				$litem = $listItems[$entry['category.lists.id']];
-			} else {
-				$litem = $manager->create();
+			if( trim( $this->getValue( $entry, 'text.content', '' ) ) === '' ) {
+				continue;
 			}
 
-			$list[] = $litem->setParentId( $this->getValue( $entry, 'category.id' ) )->setDomain( 'cms' )
-				->setType( $this->getValue( $entry, 'category.lists.type' ) )->setRefId( $item->getId() );
+			$listType = $entry['post.lists.type'] ?? 'default';
 
-			unset( $listItems[$litem->getId()] );
+			if( ( $listItem = $item->getListItem( 'text', $listType, $entry['text.id'], false ) ) === null ) {
+				$listItem = $listManager->create();
+			}
+
+			if( ( $refItem = $listItem->getRefItem() ) === null ) {
+				$refItem = $textManager->create();
+			}
+
+			$refItem->fromArray( $entry, true );
+			$conf = [];
+
+			foreach( (array) $this->getValue( $entry, 'config', [] ) as $cfg )
+			{
+				if( ( $key = trim( $cfg['key'] ?? '' ) ) !== '' ) {
+					$conf[$key] = trim( $cfg['val'] ?? '' );
+				}
+			}
+
+			$listItem->fromArray( $entry, true );
+			$listItem->setPosition( $idx );
+			$listItem->setConfig( $conf );
+
+			$item->addListItem( 'text', $listItem, $refItem );
+
+			unset( $listItems[$listItem->getId()] );
 		}
 
-		$manager->delete( $listItems->toArray() );
-		$manager->save( $list );
+		return $item->deleteListItems( $listItems->toArray(), true );
 	}
 
 
 	/**
 	 * Constructs the data array for the view from the given item
 	 *
-	 * @param \Aimeos\MShop\Cms\Item\Iface $item Cms item object including referenced domain items
+	 * @param \Aimeos\MShop\Post\Item\Iface $item Post item object including referenced domain items
 	 * @param bool $copy True if items should be copied, false if not
 	 * @return string[] Multi-dimensional associative list of item data
 	 */
-	protected function toArray( \Aimeos\MShop\Cms\Item\Iface $item, bool $copy = false ) : array
+	protected function toArray( \Aimeos\MShop\Post\Item\Iface $item, bool $copy = false ) : array
 	{
-		$siteId = $this->getContext()->getLocale()->getSiteId();
-		$listItems = $this->getListItems( $item->getId() );
-		$catItems = $this->getCategoryItems( $listItems );
 		$data = [];
+		$siteId = $this->getContext()->getLocale()->getSiteId();
+
+		$listItems = $item->getListItems( 'text', null, null, false )->filter( function( $item ) {
+			return $item->getRefItem() === null || $item->getRefItem()->getType() !== 'content';
+		} );
 
 		foreach( $listItems as $listItem )
 		{
-			$catId = $listItem->getParentId();
-
-			if( ( $catItem = $catItems->get( $catId ) ) === null ) {
+			if( ( $refItem = $listItem->getRefItem() ) === null || $refItem->getType() === 'content' ) {
 				continue;
 			}
 
-			$list = $listItem->toArray( true ) + $catItem->toArray( true );
+			$list = $listItem->toArray( true ) + $refItem->toArray( true );
 
 			if( $copy === true )
 			{
-				$list['category.lists.siteid'] = $siteId;
-				$list['category.lists.id'] = '';
+				$list['post.lists.siteid'] = $siteId;
+				$list['post.lists.id'] = '';
+				$list['text.siteid'] = $siteId;
+				$list['text.id'] = null;
+			}
+
+			$list['post.lists.datestart'] = str_replace( ' ', 'T', $list['post.lists.datestart'] );
+			$list['post.lists.dateend'] = str_replace( ' ', 'T', $list['post.lists.dateend'] );
+			$list['config'] = [];
+
+			foreach( $listItem->getConfig() as $key => $value ) {
+				$list['config'][] = ['key' => $key, 'val' => $value];
 			}
 
 			$data[] = $list;
@@ -400,8 +400,8 @@ class Standard
 	 */
 	protected function render( \Aimeos\MW\View\Iface $view ) : string
 	{
-		/** admin/jqadm/cms/category/template-item
-		 * Relative path to the HTML body template of the category subpart for cmss.
+		/** admin/jqadm/post/seo/template-item
+		 * Relative path to the HTML body template of the seo subpart for posts.
 		 *
 		 * The template file contains the HTML code and processing instructions
 		 * to generate the result shown in the body of the frontend. The
@@ -416,11 +416,11 @@ class Standard
 		 * should be replaced by the name of the new class.
 		 *
 		 * @param string Relative path to the template creating the HTML code
-		 * @since 2016.04
+		 * @since 2020.10
 		 * @category Developer
 		 */
-		$tplconf = 'admin/jqadm/cms/category/template-item';
-		$default = 'cms/item-category-standard';
+		$tplconf = 'admin/jqadm/post/seo/template-item';
+		$default = 'post/item-seo-standard';
 
 		return $view->render( $view->config( $tplconf, $default ) );
 	}

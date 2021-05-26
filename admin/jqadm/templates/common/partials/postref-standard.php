@@ -19,11 +19,11 @@ $target = $this->config( 'admin/jqadm/url/get/target' );
 $cntl = $this->config( 'admin/jqadm/url/get/controller', 'Jqadm' );
 $action = $this->config( 'admin/jqadm/url/get/action', 'get' );
 $config = $this->config( 'admin/jqadm/url/get/config', [] );
-$url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'], [], $config );
+$url = $this->url( $target, $cntl, $action, ['resource' => 'post', 'id' => '_id_'], [], $config );
 
 
 ?>
-<div class="cmsref-list"
+<div class="postref-list"
 	data-resource="<?= $enc->attr( $this->get( 'resource' ) ) ?>"
 	data-parentid="<?= $enc->attr( $this->get( 'parentid' ) ) ?>"
 	data-fields="<?= $enc->attr( $this->get( 'fields', [] ) ) ?>"
@@ -86,7 +86,7 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 					<th v-if="fields.includes(prefix + 'refid')" v-bind:class="css('refid')">
 						<a v-bind:class="sortclass('refid')" v-on:click.prevent="sort('refid')"
 							tabindex="<?= $this->get( 'tabindex' ) ?>" href="#">
-							<?= $enc->html( $this->translate( 'admin', 'Cms' ) ) ?>
+							<?= $enc->html( $this->translate( 'admin', 'Post' ) ) ?>
 						</a>
 					</th>
 
@@ -172,7 +172,7 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 											v-on:click.capture.stop="toggle('refid')"
 											v-bind:checked="fields.includes(prefix + 'refid')"
 											type="checkbox" tabindex="<?= $this->get( 'tabindex' ) ?>" />
-										<?= $enc->html( $this->translate( 'admin', 'Cms' ) ) ?>
+										<?= $enc->html( $this->translate( 'admin', 'Post' ) ) ?>
 									</label></a>
 								</li>
 							</ul>
@@ -257,7 +257,7 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 					</td>
 					<td v-if="fields.includes(prefix + 'position')" v-bind:class="css('position')">
 						<input type="number" class="form-control novalidate" tabindex="<?= $this->get( 'tabindex' ) ?>"
-							v-bind:name="`<?= $enc->js( $this->formparam( ['cms', '-prefix-position', ''] ) ) ?>`.replace('-prefix-', prefix)"
+							v-bind:name="`<?= $enc->js( $this->formparam( ['post', '-prefix-position', ''] ) ) ?>`.replace('-prefix-', prefix)"
 							v-if="item.edit" v-model="item[prefix + 'position']" />
 						<div v-else v-on:click="edit(idx)" class="items-field">
 							{{ item[prefix + 'position'] }}
@@ -266,7 +266,7 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 					<td v-if="fields.includes(prefix + 'status')" v-bind:class="css('status')">
 						<select class="form-select novalidate" tabindex="<?= $this->get( 'tabindex' ) ?>"
 							is="select-component" v-if="item.edit"
-							v-bind:name="`<?= $enc->js( $this->formparam( ['cms', '-prefix-status', ''] ) ) ?>`.replace('-prefix-', prefix)"
+							v-bind:name="`<?= $enc->js( $this->formparam( ['post', '-prefix-status', ''] ) ) ?>`.replace('-prefix-', prefix)"
 							v-bind:items="<?= $enc->attr( $status ) ?>"
 							v-model="item[prefix + 'status']">
 						</select>
@@ -277,7 +277,7 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 					<td v-if="fields.includes(prefix + 'type')" v-bind:class="css('type')">
 						<select class="form-select novalidate" tabindex="<?= $this->get( 'tabindex' ) ?>"
 							is="select-component" v-if="item.edit"
-							v-bind:name="`<?= $enc->js( $this->formparam( ['cms', '-prefix-type', ''] ) ) ?>`.replace('-prefix-', prefix)"
+							v-bind:name="`<?= $enc->js( $this->formparam( ['post', '-prefix-type', ''] ) ) ?>`.replace('-prefix-', prefix)"
 							v-bind:items="types"
 							v-model="item[prefix + 'type']">
 						</select>
@@ -288,14 +288,14 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 					<td v-if="fields.includes(prefix + 'config')" v-on:click="edit(idx)" v-bind:class="css('config')">
 						<input-map
 							v-bind:editable="siteid === item[prefix + 'siteid'] && item.edit"
-							v-bind:name="`<?= $enc->js( $this->formparam( ['cms', '-prefix-config', ''] ) ) ?>`.replace('-prefix-', prefix)"
+							v-bind:name="`<?= $enc->js( $this->formparam( ['post', '-prefix-config', ''] ) ) ?>`.replace('-prefix-', prefix)"
 							v-bind:tabindex="`<?= $enc->js( $this->get( 'tabindex' ) ) ?>`"
 							v-model="item[prefix + 'config']">
 						</input-map>
 					</td>
 					<td v-if="fields.includes(prefix + 'datestart')" v-bind:class="css('datestart')">
 						<input is="flat-pickr" v-if="item.edit" class="form-control novalidate custom-datetime" type="datetime-local"
-							v-bind:name="`<?= $enc->js( $this->formparam( ['cms', '-prefix-datestart', ''] ) ) ?>`.replace('-prefix-', prefix)"
+							v-bind:name="`<?= $enc->js( $this->formparam( ['post', '-prefix-datestart', ''] ) ) ?>`.replace('-prefix-', prefix)"
 							tabindex="<?= $this->get( 'tabindex' ) ?>"
 							v-bind:value="value('datestart')"
 							v-bind:config="Aimeos.flatpickr.datetime" />
@@ -305,7 +305,7 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 					</td>
 					<td v-if="fields.includes(prefix + 'dateend')" v-bind:class="css('dateend')">
 						<input is="flat-pickr" v-if="item.edit" class="form-control novalidate custom-datetime" type="datetime-local"
-							v-bind:name="`<?= $enc->js( $this->formparam( ['cms', '-prefix-dateend', ''] ) ) ?>`.replace('-prefix-', prefix)"
+							v-bind:name="`<?= $enc->js( $this->formparam( ['post', '-prefix-dateend', ''] ) ) ?>`.replace('-prefix-', prefix)"
 							tabindex="<?= $this->get( 'tabindex' ) ?>"
 							v-bind:value="value('dateend')"
 							v-bind:config="Aimeos.flatpickr.datetime" />
@@ -319,10 +319,10 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 								v-bind:options="options" v-bind:reduce="entry => entry.id" v-bind:filterable="false"
 								v-model="item[prefix + 'refid']" v-on:search="suggest" v-on:search:focus="suggest"
 								v-bind:clearSearchOnSelect="false"
-								placeholder="<?= $enc->attr( $this->translate( 'admin', 'Cms ID, SKU or label' ) ) ?>" >
+								placeholder="<?= $enc->attr( $this->translate( 'admin', 'Post ID, SKU or label' ) ) ?>" >
 								<template v-slot:no-options="{ search, searching, loading }">
 									<template v-if="searching">
-										<?= $enc->html( $this->translate( 'admin', 'No cms found' ) ) ?>
+										<?= $enc->html( $this->translate( 'admin', 'No post found' ) ) ?>
 									</template>
 									<em v-else>
 										<?= $enc->html( $this->translate( 'admin', 'Start typing ...' ) ) ?>
@@ -330,9 +330,9 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 								</template>
 							</v-select>
 							<input type="hidden" v-model="item[prefix + 'refid']"
-								v-bind:name="`<?= $enc->js( $this->formparam( ['cms', '-prefix-refid', ''] ) ) ?>`.replace('-prefix-', prefix)" />
+								v-bind:name="`<?= $enc->js( $this->formparam( ['post', '-prefix-refid', ''] ) ) ?>`.replace('-prefix-', prefix)" />
 						</div>
-						<a v-else class="items-field act-view" v-bind:class="'status-' + item['cms.status']"
+						<a v-else class="items-field act-view" v-bind:class="'status-' + item['post.status']"
 							tabindex="<?= $this->get( 'tabindex' ) ?>" target="_blank"
 							v-bind:href="`<?= $url ?>`.replace('_id_', item[prefix + 'refid'] || '')">
 							{{ label(idx) }}
@@ -340,7 +340,7 @@ $url = $this->url( $target, $cntl, $action, ['resource' => 'cms', 'id' => '_id_'
 					</td>
 					<td class="actions">
 						<input type="hidden" v-if="item.edit" v-bind:value="item[prefix + 'id']"
-							v-bind:name="`<?= $enc->js( $this->formparam( ['cms', '-prefix-id', ''] ) ) ?>`.replace('-prefix-', prefix)" >
+							v-bind:name="`<?= $enc->js( $this->formparam( ['post', '-prefix-id', ''] ) ) ?>`.replace('-prefix-', prefix)" >
 						<a v-if="!item.edit" class="btn act-edit fa" href="#" tabindex="<?= $this->get( 'tabindex' ) ?>"
 							title="<?= $enc->attr( $this->translate( 'admin', 'Edit this entry' ) ) ?>"
 							aria-label="<?= $enc->attr( $this->translate( 'admin', 'Edit' ) ) ?>"

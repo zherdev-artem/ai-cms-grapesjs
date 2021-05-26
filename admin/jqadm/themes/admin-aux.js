@@ -7,17 +7,17 @@ Aimeos.CmsRef = {
 	init: function() {
 
 		const self = this;
-		const node = document.querySelector('.item-cms .cmsref-list');
+		const node = document.querySelector('.item-post .postref-list');
 
 		if(node) {
-			Aimeos.components['cmsref'] = new Vue({
+			Aimeos.components['postref'] = new Vue({
 				'el': node,
 				'mixins': [Aimeos.CmsRef.mixins]
 			});
 		}
 
-		Aimeos.lazy('.item-cms .cmsref-list', function() {
-			Aimeos.components['cmsref'] && Aimeos.components['cmsref'].reset();
+		Aimeos.lazy('.item-post .postref-list', function() {
+			Aimeos.components['postref'] && Aimeos.components['postref'].reset();
 		});
 	},
 
@@ -70,7 +70,7 @@ Aimeos.CmsRef = {
 				const fieldkey = 'aimeos/jqadm/' + this.resource.replace('/', '') + '/fields';
 				this.fields = this.columns(this.$el.dataset.fields || [], fieldkey);
 			} catch(e) {
-				console.log( '[Aimeos] Init referenced cms list failed: ' + e);
+				console.log( '[Aimeos] Init referenced post list failed: ' + e);
 			}
 		},
 
@@ -184,7 +184,7 @@ Aimeos.CmsRef = {
 				}
 
 				if(this.fields.includes(this.prefix + 'refid')) {
-					args.fields['cms'] = ['cms.id', 'cms.code', 'cms.label', 'cms.status'];
+					args.fields['post'] = ['post.id', 'post.code', 'post.label', 'post.status'];
 				}
 				args.fields[this.resource] = [self.prefix + 'id', self.prefix + 'siteid', ...self.fields];
 
@@ -268,12 +268,12 @@ Aimeos.CmsRef = {
 						str += this.items[idx][this.prefix + 'refid'];
 					}
 
-					if(this.items[idx]['cms.label']) {
-						str += ' - ' + this.items[idx]['cms.label'];
+					if(this.items[idx]['post.label']) {
+						str += ' - ' + this.items[idx]['post.label'];
 					}
 
-					if(this.items[idx]['cms.code']) {
-						str += ' (' + this.items[idx]['cms.code'] + ')';
+					if(this.items[idx]['post.code']) {
+						str += ' (' + this.items[idx]['post.code'] + ')';
 					}
 				}
 
@@ -305,7 +305,7 @@ Aimeos.CmsRef = {
 				const domain = {};
 				const parentid = {};
 
-				domain[this.prefix + 'domain'] = 'cms';
+				domain[this.prefix + 'domain'] = 'post';
 				parentid[this.prefix + 'parentid'] = this.parentid;
 
 				Object.assign(this.$data, {filter: {'base': {'&&': [{'==': parentid}, {'==': domain}]}}});
@@ -332,24 +332,24 @@ Aimeos.CmsRef = {
 				const self = this;
 				const args = {
 					'filter': {'||': [
-						{'==': {'cms.id': input}},
-						{'=~': {'cms.code': input}},
-						{'=~': {'cms.label': input}}
+						{'==': {'post.id': input}},
+						{'=~': {'post.code': input}},
+						{'=~': {'post.label': input}}
 					]},
-					'fields': {'cms': ['cms.id', 'cms.code', 'cms.label']},
+					'fields': {'post': ['post.id', 'post.code', 'post.label']},
 					'page': {'offset': 0, 'limit': 25},
-					'sort': 'cms.label'
+					'sort': 'post.label'
 				};
 
 				try {
 					loadfcn ? loadfcn(true) : null;
 
-					this.get('cms', args, function(data) {
+					this.get('post', args, function(data) {
 						self.options = [];
 						(data.items || []).forEach(function(entry) {
 							self.options.push({
-								'id': entry['cms.id'],
-								'label': entry['cms.id'] + ' - ' + entry['cms.label'] + ' (' + entry['cms.code'] + ')'
+								'id': entry['post.id'],
+								'label': entry['post.id'] + ' - ' + entry['post.label'] + ' (' + entry['post.code'] + ')'
 							});
 						});
 					});
