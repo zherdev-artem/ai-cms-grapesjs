@@ -8,13 +8,13 @@
  */
 
 
-namespace Aimeos\Admin\JQAdm\Post\Seo;
+namespace Aimeos\Admin\JQAdm\Post\Meta;
 
-sprintf( 'seo' ); // for translation
+sprintf( 'meta' ); // for translation
 
 
 /**
- * Default implementation of post SEO JQAdm client.
+ * Default implementation of post meta JQAdm client.
  *
  * @package Admin
  * @subpackage JQAdm
@@ -23,8 +23,8 @@ class Standard
 	extends \Aimeos\Admin\JQAdm\Common\Admin\Factory\Base
 	implements \Aimeos\Admin\JQAdm\Common\Admin\Factory\Iface
 {
-	/** admin/jqadm/post/seo/name
-	 * Name of the SEO subpart used by the JQAdm post implementation
+	/** admin/jqadm/post/meta/name
+	 * Name of the meta subpart used by the JQAdm post implementation
 	 *
 	 * Use "Myname" if your class is named "\Aimeos\Admin\Jqadm\Post\Text\Myname".
 	 * The name is case-sensitive and you should avoid camel case names like "MyName".
@@ -43,8 +43,8 @@ class Standard
 	public function copy() : ?string
 	{
 		$view = $this->getObject()->addData( $this->getView() );
-		$view->seoData = $this->toArray( $view->item, true );
-		$view->seoBody = parent::copy();
+		$view->metaData = $this->toArray( $view->item, true );
+		$view->metaBody = parent::copy();
 
 		return $this->render( $view );
 	}
@@ -59,7 +59,7 @@ class Standard
 	{
 		$view = $this->getObject()->addData( $this->getView() );
 		$siteid = $this->getContext()->getLocale()->getSiteId();
-		$data = $view->param( 'seo', [] );
+		$data = $view->param( 'meta', [] );
 
 		foreach( $data as $idx => $entry )
 		{
@@ -67,8 +67,8 @@ class Standard
 			$data[$idx]['text.siteid'] = $siteid;
 		}
 
-		$view->seoData = $data;
-		$view->seoBody = parent::create();
+		$view->metaData = $data;
+		$view->metaBody = parent::create();
 
 		return $this->render( $view );
 	}
@@ -103,8 +103,8 @@ class Standard
 	public function get() : ?string
 	{
 		$view = $this->getObject()->addData( $this->getView() );
-		$view->seoData = $this->toArray( $view->item );
-		$view->seoBody = parent::get();
+		$view->metaData = $this->toArray( $view->item );
+		$view->metaBody = parent::get();
 
 		return $this->render( $view );
 	}
@@ -119,8 +119,8 @@ class Standard
 	{
 		$view = $this->getView();
 
-		$view->item = $this->fromArray( $view->item, $view->param( 'seo', [] ) );
-		$view->seoBody = parent::save();
+		$view->item = $this->fromArray( $view->item, $view->param( 'meta', [] ) );
+		$view->metaBody = parent::save();
 
 		return null;
 	}
@@ -135,7 +135,7 @@ class Standard
 	 */
 	public function getSubClient( string $type, string $name = null ) : \Aimeos\Admin\JQAdm\Iface
 	{
-		/** admin/jqadm/post/seo/decorators/excludes
+		/** admin/jqadm/post/meta/decorators/excludes
 		 * Excludes decorators added by the "common" option from the post JQAdm client
 		 *
 		 * Decorators extend the functionality of a class by adding new aspects
@@ -147,7 +147,7 @@ class Standard
 		 * "admin/jqadm/common/decorators/default" before they are wrapped
 		 * around the JQAdm client.
 		 *
-		 *  admin/jqadm/post/seo/decorators/excludes = array( 'decorator1' )
+		 *  admin/jqadm/post/meta/decorators/excludes = array( 'decorator1' )
 		 *
 		 * This would remove the decorator named "decorator1" from the list of
 		 * common decorators ("\Aimeos\Admin\JQAdm\Common\Decorator\*") added via
@@ -157,11 +157,11 @@ class Standard
 		 * @since 2020.10
 		 * @category Developer
 		 * @see admin/jqadm/common/decorators/default
-		 * @see admin/jqadm/post/seo/decorators/global
-		 * @see admin/jqadm/post/seo/decorators/local
+		 * @see admin/jqadm/post/meta/decorators/global
+		 * @see admin/jqadm/post/meta/decorators/local
 		 */
 
-		/** admin/jqadm/post/seo/decorators/global
+		/** admin/jqadm/post/meta/decorators/global
 		 * Adds a list of globally available decorators only to the post JQAdm client
 		 *
 		 * Decorators extend the functionality of a class by adding new aspects
@@ -172,7 +172,7 @@ class Standard
 		 * This option allows you to wrap global decorators
 		 * ("\Aimeos\Admin\JQAdm\Common\Decorator\*") around the JQAdm client.
 		 *
-		 *  admin/jqadm/post/seo/decorators/global = array( 'decorator1' )
+		 *  admin/jqadm/post/meta/decorators/global = array( 'decorator1' )
 		 *
 		 * This would add the decorator named "decorator1" defined by
 		 * "\Aimeos\Admin\JQAdm\Common\Decorator\Decorator1" only to the JQAdm client.
@@ -181,11 +181,11 @@ class Standard
 		 * @since 2020.10
 		 * @category Developer
 		 * @see admin/jqadm/common/decorators/default
-		 * @see admin/jqadm/post/seo/decorators/excludes
-		 * @see admin/jqadm/post/seo/decorators/local
+		 * @see admin/jqadm/post/meta/decorators/excludes
+		 * @see admin/jqadm/post/meta/decorators/local
 		 */
 
-		/** admin/jqadm/post/seo/decorators/local
+		/** admin/jqadm/post/meta/decorators/local
 		 * Adds a list of local decorators only to the post JQAdm client
 		 *
 		 * Decorators extend the functionality of a class by adding new aspects
@@ -196,7 +196,7 @@ class Standard
 		 * This option allows you to wrap local decorators
 		 * ("\Aimeos\Admin\JQAdm\Post\Decorator\*") around the JQAdm client.
 		 *
-		 *  admin/jqadm/post/seo/decorators/local = array( 'decorator2' )
+		 *  admin/jqadm/post/meta/decorators/local = array( 'decorator2' )
 		 *
 		 * This would add the decorator named "decorator2" defined by
 		 * "\Aimeos\Admin\JQAdm\Post\Decorator\Decorator2" only to the JQAdm client.
@@ -205,10 +205,10 @@ class Standard
 		 * @since 2020.10
 		 * @category Developer
 		 * @see admin/jqadm/common/decorators/default
-		 * @see admin/jqadm/post/seo/decorators/excludes
-		 * @see admin/jqadm/post/seo/decorators/global
+		 * @see admin/jqadm/post/meta/decorators/excludes
+		 * @see admin/jqadm/post/meta/decorators/global
 		 */
-		return $this->createSubClient( 'post/seo/' . $type, $name );
+		return $this->createSubClient( 'post/meta/' . $type, $name );
 	}
 
 
@@ -219,8 +219,8 @@ class Standard
 	 */
 	protected function getSubClientNames() : array
 	{
-		/** admin/jqadm/post/seo/subparts
-		 * List of JQAdm sub-clients rendered within the post seo section
+		/** admin/jqadm/post/meta/subparts
+		 * List of JQAdm sub-clients rendered within the post meta section
 		 *
 		 * The output of the frontend is composed of the code generated by the JQAdm
 		 * clients. Each JQAdm client can consist of serveral (or none) sub-clients
@@ -252,12 +252,12 @@ class Standard
 		 * @since 2020.10
 		 * @category Developer
 		 */
-		return $this->getContext()->getConfig()->get( 'admin/jqadm/post/seo/subparts', [] );
+		return $this->getContext()->getConfig()->get( 'admin/jqadm/post/meta/subparts', [] );
 	}
 
 
 	/**
-	 * Adds the required data used in the seo template
+	 * Adds the required data used in the meta template
 	 *
 	 * @param \Aimeos\MW\View\Iface $view View object
 	 * @return \Aimeos\MW\View\Iface View object with assigned parameters
@@ -280,8 +280,8 @@ class Standard
 		$listSearch->setConditions( $listSearch->compare( '==', 'post.lists.type.domain', 'text' ) );
 		$listSearch->setSortations( [$listSearch->sort( '+', 'post.lists.type.position' )] );
 
-		$view->seoTypes = $textTypeManager->search( $search );
-		$view->seoListTypes = $listTypeManager->search( $listSearch );
+		$view->metaTypes = $textTypeManager->search( $search );
+		$view->metaListTypes = $listTypeManager->search( $listSearch );
 
 		return $view;
 	}
@@ -400,8 +400,8 @@ class Standard
 	 */
 	protected function render( \Aimeos\MW\View\Iface $view ) : string
 	{
-		/** admin/jqadm/post/seo/template-item
-		 * Relative path to the HTML body template of the seo subpart for posts.
+		/** admin/jqadm/post/meta/template-item
+		 * Relative path to the HTML body template of the meta subpart for posts.
 		 *
 		 * The template file contains the HTML code and processing instructions
 		 * to generate the result shown in the body of the frontend. The
@@ -419,8 +419,8 @@ class Standard
 		 * @since 2020.10
 		 * @category Developer
 		 */
-		$tplconf = 'admin/jqadm/post/seo/template-item';
-		$default = 'post/item-seo-standard';
+		$tplconf = 'admin/jqadm/post/meta/template-item';
+		$default = 'post/item-meta-standard';
 
 		return $view->render( $view->config( $tplconf, $default ) );
 	}

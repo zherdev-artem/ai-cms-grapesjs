@@ -21,7 +21,7 @@ return [
 			],
 			'subparts' => [
 				'content' => 'content',
-				'seo' => 'seo',
+				'meta' => 'meta',
 				'media' => 'media',
                 'category' => 'category'
 			],

@@ -15,6 +15,8 @@ return [
 		['domain' => 'post', 'code' => 'name', 'label' => 'Name', 'status' => 1],
 		['domain' => 'post', 'code' => 'meta-keyword', 'label' => 'Meta keywords', 'status' => 1],
 		['domain' => 'post', 'code' => 'meta-description', 'label' => 'Meta description', 'status' => 1],
+        ['domain' => 'post', 'code' => 'url', 'label' => 'URL segment', 'status' => 1],
+        ['domain' => 'post', 'code' => 'short', 'label' => 'Short description', 'status' => 1],
 		['domain' => 'post', 'code' => 'content', 'label' => 'Content', 'status' => 1],
 	],
 

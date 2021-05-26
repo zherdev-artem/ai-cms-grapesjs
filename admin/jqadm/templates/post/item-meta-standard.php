@@ -6,8 +6,8 @@
  */
 
 
-/** admin/jqadm/post/item/seo/config/suggest
- * List of suggested configuration keys in post seo panel
+/** admin/jqadm/post/item/meta/config/suggest
+ * List of suggested configuration keys in post meta panel
  *
  * Item references can store arbitrary key value pairs. This setting gives
  * editors a hint which config keys are available and are used in the templates.
@@ -22,11 +22,11 @@ $enc = $this->encoder();
 
 
 ?>
-<div id="seo" class="item-seo tab-pane fade" role="tablist" aria-labelledby="seo">
+<div id="meta" class="item-post-meta tab-pane fade" role="tablist" aria-labelledby="meta">
 
 	<div id="item-text-group"
 		data-translate="<?= $enc->attr( $this->config( 'admin/jqadm/api/translate', [] ) ) ?>"
-		data-items="<?= $enc->attr( $this->get( 'seoData', [] ) ) ?>"
+		data-items="<?= $enc->attr( $this->get( 'metaData', [] ) ) ?>"
 		data-siteid="<?= $this->site()->siteid() ?>"
 		data-domain="post" >
 
@@ -71,7 +71,7 @@ $enc = $this->encoder();
 						v-bind:aria-labelledby="'item-text-group-item-' + idx" role="tabpanel" class="card-block collapse row">
 
 						<input type="hidden" v-model="item['text.id']"
-							v-bind:name="`<?= $enc->js( $this->formparam( array( 'seo', '_idx_', 'text.id' ) ) ) ?>`.replace('_idx_', idx)" />
+							v-bind:name="`<?= $enc->js( $this->formparam( array( 'meta', '_idx_', 'text.id' ) ) ) ?>`.replace('_idx_', idx)" />
 
 						<div class="col-xl-6">
 
@@ -82,7 +82,7 @@ $enc = $this->encoder();
 										v-bind:id="'cke-' + idx"
 										v-bind:config="Aimeos.ckeditor"
 										v-bind:value="item['text.content']"
-										v-bind:name="`<?= $enc->js( $this->formparam( array( 'seo', '_idx_', 'text.content' ) ) ) ?>`.replace('_idx_', idx)"
+										v-bind:name="`<?= $enc->js( $this->formparam( array( 'meta', '_idx_', 'text.content' ) ) ) ?>`.replace('_idx_', idx)"
 										v-bind:readonly="item['text.siteid'] != siteid"
 										v-bind:tabindex="`<?= $enc->js( $this->get( 'tabindex' ) ) ?>`"
 										v-model="item['text.content']"
@@ -98,7 +98,7 @@ $enc = $this->encoder();
 								<label class="col-sm-4 form-control-label"><?= $enc->html( $this->translate( 'admin', 'Status' ) ) ?></label>
 								<div class="col-sm-8">
 									<select class="form-select item-status" required="required" tabindex="<?= $this->get( 'tabindex' ) ?>"
-										v-bind:name="`<?= $enc->js( $this->formparam( array( 'seo', '_idx_', 'text.status' ) ) ) ?>`.replace('_idx_', idx)"
+										v-bind:name="`<?= $enc->js( $this->formparam( array( 'meta', '_idx_', 'text.status' ) ) ) ?>`.replace('_idx_', idx)"
 										v-bind:readonly="item['text.siteid'] != siteid"
 										v-model="item['text.status']" >
 										<option value=""><?= $enc->html( $this->translate( 'admin', 'Please select' ) ) ?></option>
@@ -124,7 +124,7 @@ $enc = $this->encoder();
 									<div class="col-sm-8">
 										<select is="select-component" required class="form-select item-languageid" tabindex="<?= $enc->attr( $this->get( 'tabindex' ) ) ?>"
 											v-bind:items="<?= $enc->attr( $languages->col( 'locale.language.label', 'locale.language.id' )->toArray() ) ?>"
-											v-bind:name="`<?= $enc->js( $this->formparam( ['seo', '_idx_', 'text.languageid'] ) ) ?>`.replace('_idx_', idx)"
+											v-bind:name="`<?= $enc->js( $this->formparam( ['meta', '_idx_', 'text.languageid'] ) ) ?>`.replace('_idx_', idx)"
 											v-bind:text="`<?= $enc->js( $this->translate( 'admin', 'Please select' ) ) ?>`"
 											v-bind:all="`<?= $enc->js( $this->translate( 'admin', 'All' ) ) ?>`"
 											v-bind:readonly="item['text.siteid'] != siteid"
@@ -137,17 +137,17 @@ $enc = $this->encoder();
 								</div>
 							<?php else : ?>
 								<input class="text-langid" type="hidden"
-									v-bind:name="`<?= $enc->js( $this->formparam( array( 'seo', '_idx_', 'text.languageid' ) ) ) ?>`.replace('_idx_', idx)"
+									v-bind:name="`<?= $enc->js( $this->formparam( array( 'meta', '_idx_', 'text.languageid' ) ) ) ?>`.replace('_idx_', idx)"
 									value="<?= $enc->attr( $languages->getCode()->first() ) ?>" />
 							<?php endif ?>
 
-							<?php if( ( $seoTypes = $this->get( 'seoTypes', map() ) )->count() !== 1 ) : ?>
+							<?php if( ( $metaTypes = $this->get( 'metaTypes', map() ) )->count() !== 1 ) : ?>
 								<div class="form-group row mandatory">
 									<label class="col-sm-4 form-control-label help"><?= $enc->html( $this->translate( 'admin', 'Type' ) ) ?></label>
 									<div class="col-sm-8">
 										<select is="select-component" required class="form-select item-type" tabindex="<?= $enc->attr( $this->get( 'tabindex' ) ) ?>"
-											v-bind:items="<?= $enc->attr( $seoTypes->col( 'text.type.label', 'text.type.code' )->toArray() ) ?>"
-											v-bind:name="`<?= $enc->js( $this->formparam( ['seo', '_idx_', 'text.type'] ) ) ?>`.replace('_idx_', idx)"
+											v-bind:items="<?= $enc->attr( $metaTypes->col( 'text.type.label', 'text.type.code' )->toArray() ) ?>"
+											v-bind:name="`<?= $enc->js( $this->formparam( ['meta', '_idx_', 'text.type'] ) ) ?>`.replace('_idx_', idx)"
 											v-bind:text="`<?= $enc->js( $this->translate( 'admin', 'Please select' ) ) ?>`"
 											v-bind:readonly="item['text.siteid'] != siteid"
 											v-model="item['text.type']" >
@@ -159,15 +159,15 @@ $enc = $this->encoder();
 								</div>
 							<?php else : ?>
 								<input class="item-type" type="hidden"
-									v-bind:name="`<?= $enc->js( $this->formparam( array( 'seo', '_idx_', 'text.type' ) ) ) ?>`.replace('_idx_', idx)"
-									value="<?= $enc->attr( $seoTypes->getCode()->first() ) ?>" />
+									v-bind:name="`<?= $enc->js( $this->formparam( array( 'meta', '_idx_', 'text.type' ) ) ) ?>`.replace('_idx_', idx)"
+									value="<?= $enc->attr( $metaTypes->getCode()->first() ) ?>" />
 							<?php endif ?>
 
 							<div class="form-group row optional">
 									<label class="col-sm-4 form-control-label help"><?= $enc->html( $this->translate( 'admin', 'Label' ) ) ?></label>
 								<div class="col-sm-8">
 									<input class="form-control item-label" type="text" tabindex="<?= $this->get( 'tabindex' ) ?>"
-										v-bind:name="`<?= $enc->js( $this->formparam( array( 'seo', '_idx_', 'text.label' ) ) ) ?>`.replace('_idx_', idx)"
+										v-bind:name="`<?= $enc->js( $this->formparam( array( 'meta', '_idx_', 'text.label' ) ) ) ?>`.replace('_idx_', idx)"
 										placeholder="<?= $enc->attr( $this->translate( 'admin', 'Label' ) ) ?>"
 										v-bind:readonly="item['text.siteid'] != siteid"
 										v-model="item['text.label']" />
@@ -197,7 +197,7 @@ $enc = $this->encoder();
 									<div class="col-sm-8">
 										<select is="select-component" required class="form-select listitem-type" tabindex="<?= $enc->attr( $this->get( 'tabindex' ) ) ?>"
 											v-bind:items="<?= $enc->attr( $listTypes->col( 'post.lists.type.label', 'post.lists.type.code' )->toArray() ) ?>"
-											v-bind:name="`<?= $enc->js( $this->formparam( ['seo', '_idx_', 'post.lists.type'] ) ) ?>`.replace('_idx_', idx)"
+											v-bind:name="`<?= $enc->js( $this->formparam( ['meta', '_idx_', 'post.lists.type'] ) ) ?>`.replace('_idx_', idx)"
 											v-bind:text="`<?= $enc->js( $this->translate( 'admin', 'Please select' ) ) ?>`"
 											v-bind:readonly="item['post.lists.siteid'] != siteid"
 											v-model="item['post.lists.type']" >
@@ -209,7 +209,7 @@ $enc = $this->encoder();
 								</div>
 							<?php else : ?>
 								<input class="listitem-type" type="hidden"
-									v-bind:name="`<?= $enc->js( $this->formparam( ['seo', '_idx_', 'post.lists.type'] ) ) ?>`.replace('_idx_', idx)"
+									v-bind:name="`<?= $enc->js( $this->formparam( ['meta', '_idx_', 'post.lists.type'] ) ) ?>`.replace('_idx_', idx)"
 									value="<?= $enc->attr( $listTypes->getCode()->first() ) ?>" />
 							<?php endif ?>
 
@@ -217,7 +217,7 @@ $enc = $this->encoder();
 								<label class="col-sm-4 form-control-label help"><?= $enc->html( $this->translate( 'admin', 'Start date' ) ) ?></label>
 								<div class="col-sm-8">
 									<input is="flat-pickr" class="form-control listitem-datestart" type="datetime-local" tabindex="<?= $this->get( 'tabindex' ) ?>"
-										v-bind:name="`<?= $enc->js( $this->formparam( array( 'seo', '_idx_', 'post.lists.datestart' ) ) ) ?>`.replace('_idx_', idx)"
+										v-bind:name="`<?= $enc->js( $this->formparam( array( 'meta', '_idx_', 'post.lists.datestart' ) ) ) ?>`.replace('_idx_', idx)"
 										placeholder="<?= $enc->attr( $this->translate( 'admin', 'YYYY-MM-DD hh:mm:ss (optional)' ) ) ?>"
 										v-bind:disabled="item['post.lists.siteid'] != siteid"
 										v-bind:config="Aimeos.flatpickr.datetime"
@@ -231,7 +231,7 @@ $enc = $this->encoder();
 								<label class="col-sm-4 form-control-label help"><?= $enc->html( $this->translate( 'admin', 'End date' ) ) ?></label>
 								<div class="col-sm-8">
 									<input is="flat-pickr" class="form-control listitem-dateend" type="datetime-local" tabindex="<?= $this->get( 'tabindex' ) ?>"
-										v-bind:name="`<?= $enc->js( $this->formparam( array( 'seo', '_idx_', 'post.lists.dateend' ) ) ) ?>`.replace('_idx_', idx)"
+										v-bind:name="`<?= $enc->js( $this->formparam( array( 'meta', '_idx_', 'post.lists.dateend' ) ) ) ?>`.replace('_idx_', idx)"
 										placeholder="<?= $enc->attr( $this->translate( 'admin', 'YYYY-MM-DD hh:mm:ss (optional)' ) ) ?>"
 										v-bind:disabled="item['post.lists.siteid'] != siteid"
 										v-bind:config="Aimeos.flatpickr.datetime"
@@ -245,14 +245,14 @@ $enc = $this->encoder();
 
 						<div v-show="item['_ext']" class="col-xl-6 secondary" v-bind:class="{readonly: item['post.lists.siteid'] != siteid}">
 							<config-table v-bind:tabindex="`<?= $enc->js( $this->get( 'tabindex' ) ) ?>`"
-								v-bind:keys="<?= $enc->attr( $this->config( 'admin/jqadm/post/item/seo/config/suggest', [] ) ) ?>"
-								v-bind:name="`<?= $enc->js( $this->formparam( ['seo', '_idx_', 'config', '_pos_', '_key_'] ) ) ?>`"
+								v-bind:keys="<?= $enc->attr( $this->config( 'admin/jqadm/post/item/meta/config/suggest', [] ) ) ?>"
+								v-bind:name="`<?= $enc->js( $this->formparam( ['meta', '_idx_', 'config', '_pos_', '_key_'] ) ) ?>`"
 								v-bind:index="idx" v-bind:readonly="item['post.lists.siteid'] != siteid"
 								v-bind:items="item['config']" v-on:update:config="item['config'] = $event">
 							</config-table>
 						</div>
 
-						<?= $this->get( 'seoBody' ) ?>
+						<?= $this->get( 'metaBody' ) ?>
 
 					</div>
 				</div>
