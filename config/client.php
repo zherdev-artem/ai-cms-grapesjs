@@ -5,7 +5,12 @@ return [
 		'cms' => [
 			'page' => [
 				'template-error' => 'cms/page/body-error'
-			]
+            ],
+            'post' => [
+                'url' => [
+                    'target' => 'aimeos_post'
+                ]
+            ]
 		]
 	],
 	'jsonapi' => [

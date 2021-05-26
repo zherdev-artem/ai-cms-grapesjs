@@ -58,11 +58,7 @@ class Standard
 	 */
 	public function setUrl( string $value ) : \Aimeos\MShop\Post\Item\Iface
 	{
-		$url = \Aimeos\Map::explode( '/', trim( $value, '/' ) )->map( function( $segment ) {
-			return \Aimeos\MW\Str::slug( $segment );
-		} )->join( '/' );
-
-		return $this->set( 'post.url', '/' . $url );
+		return $this->set( 'post.url', \Aimeos\MW\Str::slug( $value ));
 	}
 
 
