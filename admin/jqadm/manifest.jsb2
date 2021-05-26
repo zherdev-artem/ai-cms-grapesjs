@@ -23,7 +23,7 @@
 			"text": "admin-aux.js",
 			"path": "themes/"
 		},{
-			"text": "cms.js",
+			"text": "post.js",
 			"path": "themes/"
 		},{
 			"text": "category.js",

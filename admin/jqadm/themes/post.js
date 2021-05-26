@@ -1,4 +1,4 @@
-Aimeos.CMS = {
+Aimeos.Post = {
     init : function() {
 		this.components();
 		this.dataset();
@@ -14,7 +14,7 @@ Aimeos.CMS = {
 				'listtype': $(".item-category .category-default .category-list").data("listtype"),
 				'siteid': $(".item-category .category-default .category-list").data("siteid")
 			},
-			'mixins': [Aimeos.CMS.Category.mixins.bind(this)()]
+			'mixins': [Aimeos.Post.Category.mixins.bind(this)()]
 		});
 
 		Aimeos.components['category/promotion'] = new Vue({
@@ -25,7 +25,7 @@ Aimeos.CMS = {
 				'listtype': $(".item-category .category-promotion .category-list").data("listtype"),
 				'siteid': $(".item-category .category-promotion .category-list").data("siteid")
 			},
-			'mixins': [Aimeos.CMS.Category.mixins.bind(this)()]
+			'mixins': [Aimeos.Post.Category.mixins.bind(this)()]
 		});
 
 	},
@@ -48,7 +48,7 @@ Aimeos.CMS = {
 	}
 };
 
-Aimeos.CMS.Category = {
+Aimeos.Post.Category = {
 
 	mixins : function() {
 		return {
@@ -135,5 +135,5 @@ Aimeos.CMS.Category = {
 };
 
 $(function() {
-	Aimeos.CMS.init();
+	Aimeos.Post.init();
 });
