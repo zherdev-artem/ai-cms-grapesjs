@@ -403,7 +403,7 @@ class Standard
 		 * @param array List of domain names
 		 * @since 2021.04
 		 */
-		$domains = $context->getConfig()->get( 'client/html/cms/post/domains', ['media', 'text'] );
+		$domains = $context->getConfig()->get( 'client/html/cms/post/domains', ['media', 'text', 'category'] );
 
 		$post = $controller->uses( $domains )->find( trim( $view->param( 'path' ) ) );
 
