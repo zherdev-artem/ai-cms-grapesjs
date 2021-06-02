@@ -207,14 +207,30 @@ Aimeos.CMSContent = {
 					activeOnRender: 1
 				}
 			},
-			'link': {
+			'button': {
 				category: 'Basic',
 				label: 'Button',
-				attributes: { class: 'fa fa-link' },
+				attributes: { class: 'fa fa-external-link' },
 				content: {
 					type: 'btn',
 					content: 'More',
 					classes: 'btn'
+				}
+			},
+			'link-block': {
+				category: 'Basic',
+				label: 'Link block',
+				attributes: { class: 'fa fa-link' },
+				content: {
+					type: 'link',
+					editable: false,
+					droppable: true,
+					style: {
+						display: 'inline-block',
+						padding: '5px',
+						'min-height': '50px',
+						'min-width': '50px'
+					}
 				}
 			},
 			'image': {
@@ -297,7 +313,7 @@ Aimeos.CMSContent = {
 					</div>
 					<div class="form-group row contact-email">
 						<label class="col-sm-4 form-control-label">E-Mail</label>
-						<div class="col-sm-8"><input class="form-control" name="contact[email]" required /></div>
+						<div class="col-sm-8"><input class="form-control" name="contact[email]" type="email" required /></div>
 					</div>
 					<div class="form-group row contact-message">
 						<label class="col-sm-4 form-control-label">Text</label>
@@ -377,20 +393,38 @@ Aimeos.CMSContent = {
 									{id: 'col-md', name: 'M (768px)'},
 									{id: 'col-lg', name: 'L (992px)'},
 									{id: 'col-xl', name: 'XL (1200px)'},
-								]}
-							],
+								]
+							},{
+								type: 'select',
+								label: 'Spacing',
+								name: 'gutters',
+								options: [
+									{id: 'no-gutters', name: 'No'},
+									{id: '', name: 'Yes'},
+								]
+							}]
 						},
 						init() {
 							this.on('change:attributes:break', this.onBreakpointChange);
+							this.on('change:attributes:gutters', this.onGutterChange);
 						},
 						onBreakpointChange() {
 							const bsclass = this.getAttributes().break || 'col';
 
 							this.attributes.components.models.forEach(function(item, idx) {
 								if(item.attributes.tagName === 'div') {
-									item.setClass(bsclass);
+									item.removeClass('col');
+									item.removeClass('col-sm');
+									item.removeClass('col-md');
+									item.removeClass('col-lg');
+									item.removeClass('col-xl');
+									item.addClass(bsclass);
 								}
 							});
+						},
+						onGutterChange() {
+							this.removeClass('no-gutters');
+							this.addClass(this.getAttributes().gutters || '');
 						}
 					}
 				});
@@ -408,7 +442,10 @@ Aimeos.CMSContent = {
 				min-height: 2.5rem !important;
 			}
 			.row {
-				display: flex; padding: 10px 0; width: auto;
+				display: flex; width: auto;
+			}
+			.gjs-dashed .row {
+				padding: 10px 0;
 			}
 			.table {
 				border-collapse: initial;
