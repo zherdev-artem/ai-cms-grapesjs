@@ -36,7 +36,7 @@ class Standard
 	{
 		parent::__construct( $context );
 
-		$this->manager = \Aimeos\MShop::create( $context, 'post' );
+		$this->manager = \Aimeos\MShop::create( $context, 'postindex' );
 		$this->filter = $this->manager->filter( true );
 		$this->conditions[] = $this->filter->getConditions();
 	}
@@ -76,7 +76,7 @@ class Standard
 	 */
 	public function find( string $code ) : \Aimeos\MShop\Post\Item\Iface
 	{
-		return $this->manager->find( $code, $this->domains, null, null, true );
+		return $this->manager->find( $code, $this->domains, 'post', null, true );
 	}
 
 
@@ -105,6 +105,28 @@ class Standard
 		return $this->manager->get( $id, $this->domains, true );
 	}
 
+    /**
+	 * Adds input string for full text search
+	 *
+	 * @param string|null $text User input for full text search
+	 * @return \Aimeos\Controller\Frontend\Product\Iface Product controller for fluent interface
+	 * @since 2021.04
+	 */
+	public function text( string $text = null ) : Iface
+	{
+		if( !empty( $text ) )
+		{
+			$langid = $this->getContext()->getLocale()->getLanguageId();
+			$func = $this->filter->make( 'index.text:relevance', [$langid, $text] );
+			$sortfunc = $this->filter->make( 'sort:index.text:relevance', [$langid, $text] );
+
+			$this->addExpression( $this->filter->compare( '>', $func, 0 ) );
+			$this->addExpression( $this->filter->sort( '-', $sortfunc ) );
+		}
+
+		return $this;
+	}
+
 
 	/**
 	 * Adds a filter to return only items containing a reference to the given ID
@@ -113,7 +135,7 @@ class Standard
 	 * @param string|null $type Type code of the reference, e.g. "default" or null for all types
 	 * @param string|null $refId ID of the referenced item of the given domain or null for all references
 	 * @return \Aimeos\Controller\Frontend\Post\Iface Post controller for fluent interface
-	 * @since 2019.10
+	 * @since 2021.04
 	 */
 	public function has( string $domain, string $type = null, string $refId = null ) : Iface
 	{
@@ -153,7 +175,8 @@ class Standard
 	 */
 	public function search( int &$total = null ) : \Aimeos\Map
 	{
-		$this->filter->setConditions( $this->filter->and( $this->conditions ) );
+        $this->filter->setSortations( $this->getSortations() );
+		$this->filter->setConditions( $this->filter->and( $this->getConditions() ) );
 		return $this->manager->search( $this->filter, $this->domains, $total );
 	}
 

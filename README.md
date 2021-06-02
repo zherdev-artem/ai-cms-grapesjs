@@ -1,6 +1,7 @@
 # Fork Features
 - The Post domain
 - The Category domain for grouping posts
+- Indexing Post Text for Full Search
 
 
 <a href="https://aimeos.org/">
