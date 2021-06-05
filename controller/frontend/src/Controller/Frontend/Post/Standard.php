@@ -105,6 +105,67 @@ class Standard
 		return $this->manager->get( $id, $this->domains, true );
 	}
 
+    public function codes( $code, $domain = 'category' )
+    {
+        $code = (array) $code;
+
+		foreach( $code as $key => $entry )
+		{
+			if( is_array( $entry ) && ( $codes = $this->validateCodes( $entry ) ) !== [] )
+			{
+				$func = $this->filter->make( "index.$domain:codes", [$codes] );
+				$this->addExpression( $this->filter->compare( '!=', $func, null ) );
+				unset( $code[$key] );
+			}
+		}
+
+		if( ( $codes = $this->validateCodes( $code ) ) !== [] )
+		{
+			$func = $this->filter->make( "index.$domain:codes", [$codes] );
+			$this->addExpression( $this->filter->compare( '!=', $func, null ) );
+		}
+
+		return $this;
+    }
+
+    /**
+	 * Adds category IDs for filtering
+	 *
+	 * @param array|string $catIds Catalog ID or list of IDs
+	 * @param string $listtype List type of the posts referenced by the categories
+	 * @param int $level Constant from \Aimeos\MW\Tree\Manager\Base if posts in subcategories are matched too
+	 * @return \Aimeos\Controller\Frontend\Product\Iface Product controller for fluent interface
+	 * @since 2019.04
+	 */
+	public function category( $catIds, string $listtype = 'default', int $level = \Aimeos\MW\Tree\Manager\Base::LEVEL_ONE ) : Iface
+	{
+		if( !empty( $catIds ) && ( $ids = $this->validateIds( (array) $catIds ) ) !== [] )
+		{
+			if( $level != \Aimeos\MW\Tree\Manager\Base::LEVEL_ONE )
+			{
+				$list = map();
+				$cntl = \Aimeos\Controller\Frontend::create( $this->getContext(), 'category' );
+
+				foreach( $ids as $catId ) {
+					$list->union( $cntl->root( $catId )->getTree( $level )->toList() );
+				}
+
+				$ids = $this->validateIds( $list->keys()->toArray() );
+			}
+
+			$func = $this->filter->make( 'index.category:position', [$listtype, $ids] );
+
+			$this->addExpression( $this->filter->compare( '==', 'index.category.id', $ids ) );
+			$this->addExpression( $this->filter->compare( '>=', $func, 0 ) );
+
+			$func = $this->filter->make( 'sort:index.category:position', [$listtype, $ids] );
+			$this->addExpression( $this->filter->sort( '+', $func ) );
+			$this->addExpression( $this->filter->sort( '+', 'post.id' ) ); // prevent flaky order if posts have same position
+		}
+
+		return $this;
+	}
+
     /**
 	 * Adds input string for full text search
 	 *
@@ -131,7 +192,7 @@ class Standard
 	/**
 	 * Adds a filter to return only items containing a reference to the given ID
 	 *
-	 * @param string $domain Domain name of the referenced item, e.g. "product"
+	 * @param string $domain Domain name of the referenced item, e.g. "post"
 	 * @param string|null $type Type code of the reference, e.g. "default" or null for all types
 	 * @param string|null $refId ID of the referenced item of the given domain or null for all references
 	 * @return \Aimeos\Controller\Frontend\Post\Iface Post controller for fluent interface
@@ -230,5 +291,49 @@ class Standard
 	{
 		$this->domains = $domains;
 		return $this;
+	}
+
+    /**
+	 * Validates the given IDs as integers
+	 *
+	 * @param array $ids List of IDs to validate
+	 * @return array List of validated IDs
+	 */
+	protected function validateIds( array $ids ) : array
+	{
+		$list = [];
+
+		foreach( $ids as $id )
+		{
+			if( is_array( $id ) ) {
+				$list[] = $this->validateIds( $id );
+			} elseif( $id != '' && preg_match( '/^[A-Za-z0-9\-\_]+$/', $id ) === 1 ) {
+				$list[] = (string) $id;
+			}
+		}
+
+		return $list;
+	}
+
+    /**
+	 * Validates the given codes as integers
+	 *
+	 * @param array $ids List of codes to validate
+	 * @return array List of validated codes
+	 */
+	protected function validateCodes( array $codes ) : array
+	{
+		$list = [];
+
+		foreach( $codes as $code )
+		{
+			if( is_array( $code ) ) {
+				$list[] = $this->valcodeateCodes( $code );
+			} elseif( $code != '' && preg_match( '/^[A-Za-z0-9\-\_]+$/', $code ) === 1 ) {
+				$list[] = (string) $code;
+			}
+		}
+
+		return $list;
 	}
 }

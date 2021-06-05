@@ -118,6 +118,16 @@ class Standard
 		return 'post';
 	}
 
+    /**
+	 * Returns the category items referencing the product
+	 *
+	 * @return \Aimeos\Map Associative list of items implementing \Aimeos\MShop\Category\Item\Iface
+	 */
+	public function getCategoryItems() : \Aimeos\Map
+	{
+		return map( $this->get( '.category', [] ) );
+	}
+
 
 	/**
 	 * Tests if the item is available based on status, time, language and currency
