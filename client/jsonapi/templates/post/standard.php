@@ -188,8 +188,11 @@ $includeFcn = function( \Aimeos\MShop\Post\Item\Iface $item ) use ( $fields, $ta
 
 $filterByType = function( $item, $entry ) use ($fields) {
     $rtype = $item->getResourceType();
-    $filterTypes = array_flip($fields["$rtype.type"]) ?? [];
-    return ( in_array( $item->getType(), $filterTypes ) ) ? $entry : null;
+    if ( isset($fields["$rtype.type"]) ) {
+        return ( in_array( $item->getType(), array_flip($fields["$rtype.type"]) ) ) ? $entry : null;
+    }
+
+    return $entry;
 }
 
 
@@ -250,7 +253,9 @@ $filterByType = function( $item, $entry ) use ($fields) {
 
         <?php
             $jincluded = $this->jincluded( $items, $fields, [ 'text' => $filterByType ] );
-            $jincluded = array_filter( $jincluded, fn($v) => array_filter( $v ));
+            foreach ( $jincluded as $domain => $values ) {
+                $jincluded[$domain] = array_filter( $values );
+            }
         ?>
 
 		,"included": <?= map( $jincluded )->replace( $included )->flat( 1 )->toJson( $pretty ); ?>
