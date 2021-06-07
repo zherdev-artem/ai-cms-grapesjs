@@ -5,18 +5,18 @@
  * @copyright Metaways Infosystems GmbH, 2011
  * @copyright Aimeos (aimeos.org), 2015-2021
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager;
+namespace Aimeos\MShop\Postindex\Manager;
 
 
 /**
- * PostIndex index interface for classes managing product indices.
+ * Postindex index interface for classes managing product indices.
  *
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 interface Iface
 	extends \Aimeos\MShop\Product\Manager\Iface
@@ -37,33 +37,33 @@ interface Iface
 	 * This operation can last very long and it shouldn't be called by a script
 	 * executed by a web server.
 	 *
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function optimize() : \Aimeos\MShop\PostIndex\Manager\Iface;
+	public function optimize() : \Aimeos\MShop\Postindex\Manager\Iface;
 
 	/**
 	 * Removes all entries not touched after the given timestamp in the index.
 	 * This can be a long lasting operation.
 	 *
 	 * @param string $timestamp Timestamp in ISO format (YYYY-MM-DD HH:mm:ss)
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function cleanup( string $timestamp ) : \Aimeos\MShop\PostIndex\Manager\Iface;
+	public function cleanup( string $timestamp ) : \Aimeos\MShop\Postindex\Manager\Iface;
 
 	/**
 	 * Rebuilds the index for searching products or specified list of products.
 	 * This can be a long lasting operation.
 	 *
 	 * @param \Aimeos\MShop\Product\Item\Iface[] $items Associative list of product IDs as keys and items as values
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function rebuild( iterable $items = [] ) : \Aimeos\MShop\PostIndex\Manager\Iface;
+	public function rebuild( iterable $items = [] ) : \Aimeos\MShop\Postindex\Manager\Iface;
 
 	/**
 	 * Removes the products from the product index.
 	 *
 	 * @param array|string $ids Product ID or list of IDs
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function remove( $ids ) : \Aimeos\MShop\PostIndex\Manager\Iface;
+	public function remove( $ids ) : \Aimeos\MShop\Postindex\Manager\Iface;
 }

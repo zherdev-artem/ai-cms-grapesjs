@@ -9,7 +9,7 @@
  */
 
 
-namespace Aimeos\Controller\Jobs\PostIndex\Rebuild;
+namespace Aimeos\Controller\Jobs\Postindex\Rebuild;
 
 
 /**
@@ -42,11 +42,11 @@ class Factory
 		 *
 		 * For example, if the name of the default class is
 		 *
-		 *  \Aimeos\Controller\Jobs\PostIndex\Rebuild\Standard
+		 *  \Aimeos\Controller\Jobs\Postindex\Rebuild\Standard
 		 *
 		 * and you want to replace it with your own version named
 		 *
-		 *  \Aimeos\Controller\Jobs\PostIndex\Rebuild\Myrebuild
+		 *  \Aimeos\Controller\Jobs\Postindex\Rebuild\Myrebuild
 		 *
 		 * then you have to set the this configuration option:
 		 *
@@ -70,7 +70,7 @@ class Factory
 		}
 
 		$iface = '\\Aimeos\\Controller\\Jobs\\Iface';
-		$classname = '\\Aimeos\\Controller\\Jobs\\PostIndex\\Rebuild\\' . $name;
+		$classname = '\\Aimeos\\Controller\\Jobs\\Postindex\\Rebuild\\' . $name;
 
 		if( ctype_alnum( $name ) === false ) {
 			throw new \Aimeos\Controller\Jobs\Exception( sprintf( 'Invalid characters in class name "%1$s"', $classname ) );
@@ -137,12 +137,12 @@ class Factory
 		 * modify what is returned to the caller.
 		 *
 		 * This option allows you to wrap local decorators
-		 * ("\Aimeos\Controller\Jobs\PostIndex\Rebuild\Decorator\*") around this job controller.
+		 * ("\Aimeos\Controller\Jobs\Postindex\Rebuild\Decorator\*") around this job controller.
 		 *
 		 *  controller/jobs/post/index/rebuild/decorators/local = array( 'decorator2' )
 		 *
 		 * This would add the decorator named "decorator2" defined by
-		 * "\Aimeos\Controller\Jobs\PostIndex\Rebuild\Decorator\Decorator2" only to this job
+		 * "\Aimeos\Controller\Jobs\Postindex\Rebuild\Decorator\Decorator2" only to this job
 		 * controller.
 		 *
 		 * @param array List of decorator names

@@ -12,7 +12,7 @@ namespace Aimeos\MW\Setup\Task;
 /**
  * Creates all CMS tables.
  */
-class TablesCreatePostIndex extends \Aimeos\MW\Setup\Task\TablesCreateMShop
+class TablesCreatePostindex extends \Aimeos\MW\Setup\Task\TablesCreateMShop
 {
 	/**
 	 * Returns the list of task names which depends on this task.

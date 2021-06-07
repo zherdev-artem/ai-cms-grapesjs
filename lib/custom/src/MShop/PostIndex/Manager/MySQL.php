@@ -4,22 +4,22 @@
  * @license LGPLv3, https://opensource.org/licenses/LGPL-3.0
  * @copyright Aimeos (aimeos.org), 2020-2021
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager;
+namespace Aimeos\MShop\Postindex\Manager;
 
 
 /**
  * MySQL index index manager for searching in product tables.
  *
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 class MySQL
-	extends \Aimeos\MShop\PostIndex\Manager\Standard
-	implements \Aimeos\MShop\PostIndex\Manager\Iface, \Aimeos\MShop\Common\Manager\Factory\Iface
+	extends \Aimeos\MShop\Postindex\Manager\Standard
+	implements \Aimeos\MShop\Postindex\Manager\Iface, \Aimeos\MShop\Common\Manager\Factory\Iface
 {
 	private $subManagers;
 
@@ -40,7 +40,7 @@ class MySQL
 	/**
 	 * Returns the list of sub-managers available for the index attribute manager.
 	 *
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface[] Associative list of the sub-domain as key and the manager object as value
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface[] Associative list of the sub-domain as key and the manager object as value
 	 */
 	protected function getSubManagers() : array
 	{

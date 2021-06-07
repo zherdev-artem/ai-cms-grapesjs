@@ -4,18 +4,18 @@
  * @license LGPLv3, https://opensource.org/licenses/LGPL-3.0
  * @copyright Aimeos (aimeos.org), 2015-2021
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager;
+namespace Aimeos\MShop\Postindex\Manager;
 
 
 /**
  * Factory for index managers
  *
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 class Factory
 	extends \Aimeos\MShop\Common\Factory\Base
@@ -27,7 +27,7 @@ class Factory
 	 * @param \Aimeos\MShop\Context\Item\Iface $context Shop context instance with necessary objects
 	 * @param string|null $name Manager name
 	 * @return \Aimeos\MShop\Common\Manager\Iface Manager object
-	 * @throws \Aimeos\MShop\PostIndex\Exception If requested manager implementation couldn't be found
+	 * @throws \Aimeos\MShop\Postindex\Exception If requested manager implementation couldn't be found
 	 */
 	public static function create( \Aimeos\MShop\Context\Item\Iface $context, string $name = null ) : \Aimeos\MShop\Common\Manager\Iface
 	{
@@ -41,11 +41,11 @@ class Factory
 		 *
 		 * For example, if the name of the default class is
 		 *
-		 *  \Aimeos\MShop\PostIndex\Manager\Standard
+		 *  \Aimeos\MShop\Postindex\Manager\Standard
 		 *
 		 * and you want to replace it with your own version named
 		 *
-		 *  \Aimeos\MShop\PostIndex\Manager\Mymanager
+		 *  \Aimeos\MShop\Postindex\Manager\Mymanager
 		 *
 		 * then you have to set the this configuration option:
 		 *
@@ -68,8 +68,8 @@ class Factory
 			$name = $context->getConfig()->get( 'mshop/post/index/manager/name', 'Standard' );
 		}
 
-		$iface = \Aimeos\MShop\PostIndex\Manager\Iface::class;
-		$classname = '\Aimeos\MShop\PostIndex\Manager\\' . $name;
+		$iface = \Aimeos\MShop\Postindex\Manager\Iface::class;
+		$classname = '\Aimeos\MShop\Postindex\Manager\\' . $name;
 
 		if( ctype_alnum( $name ) === false ) {
 			throw new \Aimeos\MShop\Exception( sprintf( 'Invalid characters in class name "%1$s"', $classname ) );
@@ -136,12 +136,12 @@ class Factory
 		 * modify what is returned to the caller.
 		 *
 		 * This option allows you to wrap local decorators
-		 * ("\Aimeos\MShop\PostIndex\Manager\Decorator\*") around the index manager.
+		 * ("\Aimeos\MShop\Postindex\Manager\Decorator\*") around the index manager.
 		 *
 		 *  mshop/post/index/manager/decorators/local = array( 'decorator2' )
 		 *
 		 * This would add the decorator named "decorator2" defined by
-		 * "\Aimeos\MShop\PostIndex\Manager\Decorator\Decorator2" only to the index
+		 * "\Aimeos\MShop\Postindex\Manager\Decorator\Decorator2" only to the index
 		 * manager.
 		 *
 		 * @param array List of decorator names

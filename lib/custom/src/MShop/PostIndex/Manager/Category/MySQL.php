@@ -5,21 +5,21 @@
  * @copyright Metaways Infosystems GmbH, 2012
  * @copyright Aimeos (aimeos.org), 2015-2021
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager\Category;
+namespace Aimeos\MShop\Postindex\Manager\Category;
 
 
 /**
  * MySQL based index category for searching in post tables.
  *
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 class MySQL
-	extends \Aimeos\MShop\PostIndex\Manager\Category\Standard
+	extends \Aimeos\MShop\Postindex\Manager\Category\Standard
 {
 	private $searchConfig = array(
 		'index.category.id' => array(

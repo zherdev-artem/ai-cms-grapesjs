@@ -21,7 +21,7 @@ class TablesCreatePostPlatform extends TablesCreateMShop
 	 */
 	public function getPreDependencies() : array
 	{
-		return ['TablesCreateMAdmin', 'TablesCreatePostIndex'];
+		return ['TablesCreateMAdmin', 'TablesCreatePostindex'];
 	}
 
 

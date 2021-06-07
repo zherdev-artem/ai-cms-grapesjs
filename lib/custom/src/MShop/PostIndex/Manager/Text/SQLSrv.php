@@ -4,21 +4,21 @@
  * @license LGPLv3, https://opensource.org/licenses/LGPL-3.0
  * @copyright Aimeos (aimeos.org), 2020-2021
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager\Text;
+namespace Aimeos\MShop\Postindex\Manager\Text;
 
 
 /**
  * SQL Server based index text for searching in product tables.
  *
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 class SQLSrv
-	extends \Aimeos\MShop\PostIndex\Manager\Text\Standard
+	extends \Aimeos\MShop\Postindex\Manager\Text\Standard
 {
 	private $searchConfig = array(
 		'index.text:relevance' => array(

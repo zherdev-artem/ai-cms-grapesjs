@@ -8,7 +8,7 @@
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager\Text;
+namespace Aimeos\MShop\Postindex\Manager\Text;
 
 
 /**
@@ -18,7 +18,7 @@ namespace Aimeos\MShop\PostIndex\Manager\Text;
  * @subpackage Index
  */
 class PgSQL
-	extends \Aimeos\MShop\PostIndex\Manager\Text\Standard
+	extends \Aimeos\MShop\Postindex\Manager\Text\Standard
 {
 	private $searchConfig = array(
 		'index.text:relevance' => array(

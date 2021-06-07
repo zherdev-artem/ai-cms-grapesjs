@@ -9,7 +9,7 @@
  */
 
 
-namespace Aimeos\Controller\Jobs\PostIndex\Rebuild;
+namespace Aimeos\Controller\Jobs\Postindex\Rebuild;
 
 
 /**
@@ -57,7 +57,7 @@ class Standard
 		$context->getLocale()->setLanguageId( null );
 		$context->getLocale()->setCurrencyId( null );
 
-		$manager = \Aimeos\MShop\PostIndex\Manager\Factory::create( $context );
+		$manager = \Aimeos\MShop\Postindex\Manager\Factory::create( $context );
 
 		$manager->rebuild();
 		$manager->cleanup( $timestamp );

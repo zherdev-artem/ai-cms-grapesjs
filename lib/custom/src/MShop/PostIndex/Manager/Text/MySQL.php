@@ -5,21 +5,21 @@
  * @copyright Metaways Infosystems GmbH, 2012
  * @copyright Aimeos (aimeos.org), 2015-2021
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager\Text;
+namespace Aimeos\MShop\Postindex\Manager\Text;
 
 
 /**
  * MySQL based index text for searching in product tables.
  *
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 class MySQL
-	extends \Aimeos\MShop\PostIndex\Manager\Text\Standard
+	extends \Aimeos\MShop\Postindex\Manager\Text\Standard
 {
 	private $searchConfig = array(
 		'index.text:relevance' => array(

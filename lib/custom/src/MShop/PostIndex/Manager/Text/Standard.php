@@ -4,22 +4,22 @@
  * @copyright Metaways Infosystems GmbH, 2012
  * @copyright Aimeos (aimeos.org), 2015-2021
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager\Text;
+namespace Aimeos\MShop\Postindex\Manager\Text;
 
 
 /**
  * Submanager for text.
  *
  * @package MShop
- * @subpackage PostIndex
+ * @subpackage Postindex
  */
 class Standard
-	extends \Aimeos\MShop\PostIndex\Manager\DBBase
-	implements \Aimeos\MShop\PostIndex\Manager\Text\Iface, \Aimeos\MShop\Common\Manager\Factory\Iface
+	extends \Aimeos\MShop\Postindex\Manager\DBBase
+	implements \Aimeos\MShop\Postindex\Manager\Text\Iface, \Aimeos\MShop\Common\Manager\Factory\Iface
 {
 	private $searchConfig = array(
 		// @deprecated Removed 2019.01
@@ -119,7 +119,7 @@ class Standard
 	 * Removes old entries from the storage.
 	 *
 	 * @param iterable $siteids List of IDs for sites whose entries should be deleted
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
 	public function clear( iterable $siteids ) : \Aimeos\MShop\Common\Manager\Iface
 	{
@@ -134,9 +134,9 @@ class Standard
 	 * This can be a long lasting operation.
 	 *
 	 * @param string $timestamp Timestamp in ISO format (YYYY-MM-DD HH:mm:ss)
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function cleanup( string $timestamp ) : \Aimeos\MShop\PostIndex\Manager\Iface
+	public function cleanup( string $timestamp ) : \Aimeos\MShop\Postindex\Manager\Iface
 	{
 		/** mshop/post/index/manager/text/cleanup/mysql
 		 * Deletes the index text records that haven't been touched
@@ -177,7 +177,7 @@ class Standard
 	 * Removes multiple items.
 	 *
 	 * @param \Aimeos\MShop\Common\Item\Iface[]|string[] $itemIds List of item objects or IDs of the items
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
 	public function delete( $itemIds ) : \Aimeos\MShop\Common\Manager\Iface
 	{
@@ -280,11 +280,11 @@ class Standard
 		 *
 		 * For example, if the name of the default class is
 		 *
-		 *  \Aimeos\MShop\PostIndex\Manager\Text\Standard
+		 *  \Aimeos\MShop\Postindex\Manager\Text\Standard
 		 *
 		 * and you want to replace it with your own version named
 		 *
-		 *  \Aimeos\MShop\PostIndex\Manager\Text\Mytext
+		 *  \Aimeos\MShop\Postindex\Manager\Text\Mytext
 		 *
 		 * then you have to set the this configuration option:
 		 *
@@ -365,13 +365,13 @@ class Standard
 		 * modify what is returned to the caller.
 		 *
 		 * This option allows you to wrap local decorators
-		 * ("\Aimeos\MShop\PostIndex\Manager\Text\Decorator\*") around the index text
+		 * ("\Aimeos\MShop\Postindex\Manager\Text\Decorator\*") around the index text
 		 * manager.
 		 *
 		 *  mshop/post/index/manager/text/decorators/local = array( 'decorator2' )
 		 *
 		 * This would add the decorator named "decorator2" defined by
-		 * "\Aimeos\MShop\PostIndex\Manager\Text\Decorator\Decorator2" only to the index
+		 * "\Aimeos\MShop\Postindex\Manager\Text\Decorator\Decorator2" only to the index
 		 * text manager.
 		 *
 		 * @param array List of decorator names
@@ -391,9 +391,9 @@ class Standard
 	 * Execution of this operation can take a very long time and shouldn't be
 	 * called through a web server enviroment.
 	 *
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function optimize() : \Aimeos\MShop\PostIndex\Manager\Iface
+	public function optimize() : \Aimeos\MShop\Postindex\Manager\Iface
 	{
 		/** mshop/post/index/manager/text/optimize/mysql
 		 * Optimizes the stored text data for retrieving the records faster
@@ -432,9 +432,9 @@ class Standard
 	 * This can be a long lasting operation.
 	 *
 	 * @param \Aimeos\MShop\Post\Item\Iface[] $items Associative list of product IDs as keys and items as values
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function rebuild( iterable $items = [] ) : \Aimeos\MShop\PostIndex\Manager\Iface
+	public function rebuild( iterable $items = [] ) : \Aimeos\MShop\Postindex\Manager\Iface
 	{
 		if( map( $items )->isEmpty() ) { return $this; }
 
@@ -509,9 +509,9 @@ class Standard
 	 * Removes the post from the product index.
 	 *
 	 * @param array|string $ids Post ID or list of IDs
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function remove( $ids ) : \Aimeos\MShop\PostIndex\Manager\Iface
+	public function remove( $ids ) : \Aimeos\MShop\Postindex\Manager\Iface
 	{
 		parent::remove( $ids )->delete( $ids );
 		return $this;
@@ -785,7 +785,7 @@ class Standard
 	/**
 	 * Returns the list of sub-managers available for the index attribute manager.
 	 *
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface[] Associative list of the sub-domain as key and the manager object as value
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface[] Associative list of the sub-domain as key and the manager object as value
 	 */
 	protected function getSubManagers() : array
 	{

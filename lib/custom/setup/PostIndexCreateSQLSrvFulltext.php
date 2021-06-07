@@ -12,7 +12,7 @@ namespace Aimeos\MW\Setup\Task;
 /**
  * Creates the full text index on mshop_post_index_text.content for SQL Server
  */
-class PostIndexCreateSQLSrvFulltext extends \Aimeos\MW\Setup\Task\Base
+class PostindexCreateSQLSrvFulltext extends \Aimeos\MW\Setup\Task\Base
 {
 	/**
 	 * Returns the list of task names which depends on this task.

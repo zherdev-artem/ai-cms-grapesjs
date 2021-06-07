@@ -8,7 +8,7 @@
  */
 
 
-namespace Aimeos\MShop\PostIndex\Manager;
+namespace Aimeos\MShop\Postindex\Manager;
 
 
 /**
@@ -42,7 +42,7 @@ abstract class DBBase
 	 * Removes old entries from the storage.
 	 *
 	 * @param iterable $siteids List of IDs for sites whose entries should be deleted
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
 	public function clear( iterable $siteids ) : \Aimeos\MShop\Common\Manager\Iface
 	{
@@ -83,7 +83,7 @@ abstract class DBBase
 	 * Removes multiple items.
 	 *
 	 * @param \Aimeos\MShop\Common\Item\Iface|\Aimeos\Map|array|string $items Item object, ID or a list of them
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
 	public function delete( $itemIds ) : \Aimeos\MShop\Common\Manager\Iface
 	{
@@ -142,9 +142,9 @@ abstract class DBBase
 	 * Rebuilds the customer index
 	 *
 	 * @param \Aimeos\MShop\Post\Item\Iface[] $items Associative list of product IDs and items values
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	public function rebuild( iterable $items = [] ) : \Aimeos\MShop\PostIndex\Manager\Iface
+	public function rebuild( iterable $items = [] ) : \Aimeos\MShop\Postindex\Manager\Iface
 	{
 		foreach( $this->getSubManagers() as $submanager ) {
 			$submanager->rebuild( $items );
@@ -158,9 +158,9 @@ abstract class DBBase
 	 * Removes the products from the product index.
 	 *
 	 * @param array|string $ids Post ID or list of IDs
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	 public function remove( $ids ) : \Aimeos\MShop\PostIndex\Manager\Iface
+	 public function remove( $ids ) : \Aimeos\MShop\Postindex\Manager\Iface
 	 {
 		foreach( $this->getSubManagers() as $submanager ) {
 			$submanager->remove( $ids );
@@ -195,9 +195,9 @@ abstract class DBBase
 	 *
 	 * @param string $timestamp Timestamp in ISO format (YYYY-MM-DD HH:mm:ss)
 	 * @param string $path Configuration path to the SQL statement to execute
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	protected function cleanupBase( string $timestamp, string $path ) : \Aimeos\MShop\PostIndex\Manager\Iface
+	protected function cleanupBase( string $timestamp, string $path ) : \Aimeos\MShop\Postindex\Manager\Iface
 	{
 		$context = $this->getContext();
 		$siteid = $context->getLocale()->getSiteId();
@@ -244,7 +244,7 @@ abstract class DBBase
 	 * @param string $path Configuration path to the SQL statement to execute
 	 * @param bool $siteidcheck If siteid should be used in the statement
 	 * @param string $name Name of the ID column
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
 	protected function deleteItemsBase( $ids, string $path, bool $siteidcheck = true,
 		string $name = 'postid' ) : \Aimeos\MShop\Common\Manager\Iface
@@ -331,9 +331,9 @@ abstract class DBBase
 	 * Optimizes the catalog customer index if necessary
 	 *
 	 * @param string $path Configuration path to the SQL statements to execute
-	 * @return \Aimeos\MShop\PostIndex\Manager\Iface Manager object for chaining method calls
+	 * @return \Aimeos\MShop\Postindex\Manager\Iface Manager object for chaining method calls
 	 */
-	protected function optimizeBase( string $path ) : \Aimeos\MShop\PostIndex\Manager\Iface
+	protected function optimizeBase( string $path ) : \Aimeos\MShop\Postindex\Manager\Iface
 	{
 		$context = $this->getContext();
 
