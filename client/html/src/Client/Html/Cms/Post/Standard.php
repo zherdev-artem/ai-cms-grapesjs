@@ -405,7 +405,7 @@ class Standard
 		 */
 		$domains = $context->getConfig()->get( 'client/html/cms/post/domains', ['media', 'text', 'category'] );
 
-		$post = $controller->uses( $domains )->find( trim( $view->param( 'path' ) ) );
+		$post = $controller->uses( $domains )->resolve( trim( $view->param( 'path' ) ) );
 
 		$this->addMetaItems( $post, $expire, $tags );
 

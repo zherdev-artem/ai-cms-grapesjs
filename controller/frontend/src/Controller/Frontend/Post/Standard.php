@@ -105,6 +105,13 @@ class Standard
 		return $this->manager->get( $id, $this->domains, true );
 	}
 
+    /**
+	 * Returns the product for the given product URL name
+	 *
+	 * @param string $code Post category code
+	 * @return \Aimeos\MShop\Post\Item\Iface Post item including the referenced domains items
+	 * @since 2021.04
+	 */
     public function codes( $code, $domain = 'category' )
     {
         $code = (array) $code;
@@ -129,13 +136,33 @@ class Standard
     }
 
     /**
+	 * Returns the product for the given product URL name
+	 *
+	 * @param string $name Post URL name
+	 * @return \Aimeos\MShop\Post\Item\Iface Post item including the referenced domains items
+	 * @since 2021.04
+	 */
+	public function resolve( string $name ) : \Aimeos\MShop\Post\Item\Iface
+	{
+		$search = $this->manager->filter( true )->slice( 0, 1 )->add( ['index.text:url()' => $name] );
+
+		if( ( $item = $this->manager->search( $search, $this->domains )->first() ) === null )
+		{
+			$msg = $this->getContext()->getI18n()->dt( 'controller/frontend', 'Unable to find product "%1$s"' );
+			throw new \Aimeos\Controller\Frontend\Post\Exception( sprintf( $msg, $name ) );
+		}
+
+		return $item;
+	}
+
+    /**
 	 * Adds category IDs for filtering
 	 *
 	 * @param array|string $catIds Catalog ID or list of IDs
 	 * @param string $listtype List type of the posts referenced by the categories
 	 * @param int $level Constant from \Aimeos\MW\Tree\Manager\Base if posts in subcategories are matched too
-	 * @return \Aimeos\Controller\Frontend\Product\Iface Product controller for fluent interface
-	 * @since 2019.04
+	 * @return \Aimeos\Controller\Frontend\Post\Iface Post controller for fluent interface
+	 * @since 2021.04
 	 */
 	public function category( $catIds, string $listtype = 'default', int $level = \Aimeos\MW\Tree\Manager\Base::LEVEL_ONE ) : Iface
 	{
@@ -170,7 +197,7 @@ class Standard
 	 * Adds input string for full text search
 	 *
 	 * @param string|null $text User input for full text search
-	 * @return \Aimeos\Controller\Frontend\Product\Iface Product controller for fluent interface
+	 * @return \Aimeos\Controller\Frontend\Post\Iface Post controller for fluent interface
 	 * @since 2021.04
 	 */
 	public function text( string $text = null ) : Iface
