@@ -38,6 +38,20 @@ class Standard
 		$this->initListItems( $listItems, $refItems );
 	}
 
+    /**
+	 * Returns the localized text type of the item or the internal label if no name is available.
+	 *
+	 * @param string $type Text type to be returned
+	 * @return string Specified text type or label of the item
+	 */
+	public function getName( string $type = 'name' ) : string
+	{
+		if( ( $item = $this->getRefItems( 'text', $type )->first() ) !== null ) {
+			return $item->getContent();
+		}
+
+		return $type === 'url' ? $this->getUrl() : $this->getLabel();
+	}
 
 	/**
 	 * Returns the URL of the post item.
