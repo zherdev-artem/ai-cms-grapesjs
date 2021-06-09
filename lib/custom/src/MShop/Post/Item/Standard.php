@@ -133,7 +133,7 @@ class Standard
 	}
 
     /**
-	 * Returns the category items referencing the product
+	 * Returns the category items referencing the post
 	 *
 	 * @return \Aimeos\Map Associative list of items implementing \Aimeos\MShop\Category\Item\Iface
 	 */
@@ -141,6 +141,18 @@ class Standard
 	{
 		return map( $this->get( '.category', [] ) );
 	}
+
+    /**
+	 * Returns the first category item referencing the post
+	 */
+    public function getCategory() {
+        $categories = $this->getCategoryItems();
+
+        if ( $categories->isEmpty() )
+            return null;
+
+        return $categories->first();
+    }
 
 
 	/**

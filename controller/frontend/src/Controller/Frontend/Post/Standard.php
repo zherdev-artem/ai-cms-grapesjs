@@ -136,7 +136,7 @@ class Standard
     }
 
     /**
-	 * Returns the product for the given product URL name
+	 * Returns the post for the given post URL name
 	 *
 	 * @param string $name Post URL name
 	 * @return \Aimeos\MShop\Post\Item\Iface Post item including the referenced domains items
@@ -148,7 +148,7 @@ class Standard
 
 		if( ( $item = $this->manager->search( $search, $this->domains )->first() ) === null )
 		{
-			$msg = $this->getContext()->getI18n()->dt( 'controller/frontend', 'Unable to find product "%1$s"' );
+			$msg = $this->getContext()->getI18n()->dt( 'controller/frontend', 'Unable to find post "%1$s"' );
 			throw new \Aimeos\Controller\Frontend\Post\Exception( sprintf( $msg, $name ) );
 		}
 

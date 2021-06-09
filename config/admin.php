@@ -25,6 +25,12 @@ return [
 				'media' => 'media',
                 'category' => 'category'
 			],
+            'fields' => [
+                'post.status',
+                'post.url',
+                'post.label',
+                'category.label'
+            ]
 		],
         'category' => [
             'domains' => [
