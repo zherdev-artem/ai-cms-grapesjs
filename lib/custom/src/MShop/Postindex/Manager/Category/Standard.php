@@ -49,14 +49,14 @@ class Standard
         ),
         'index.category:codes' => array(
 			'code' => 'index.category:codes()',
-			'internalcode' => '( SELECT mpost_codes."id" FROM mshop_product AS mpost_codes
+			'internalcode' => '( SELECT mpost_codes."id" FROM mshop_post AS mpost_codes
 				WHERE mpost."id" = mpost_codes."id" AND (
 					SELECT COUNT(DISTINCT mindat_codes."code")
 					FROM "mshop_post_index_category" AS mindat_codes
 					WHERE mpost."id" = mindat_codes."postid" AND :site
 					AND mindat_codes."code" IN ( $1 ) ) > 0
 				)',
-			'label' => 'Number of product categorys, parameter(<category Codes>)',
+			'label' => 'Number of post categorys, parameter(<category Codes>)',
 			'type' => 'null',
 			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_NULL,
 			'public' => false,
