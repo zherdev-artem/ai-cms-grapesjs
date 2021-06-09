@@ -128,6 +128,8 @@ class Standard
 			$manager->delete( $items->toArray() );
 			$manager->commit();
 
+            \Aimeos\MShop::create( $this->getContext(), 'postindex' )->delete( $items->toArray() );
+
 			return $this->redirect( 'post', 'search', null, 'delete' );
 		}
 		catch( \Exception $e )
@@ -190,6 +192,8 @@ class Standard
 
 			$manager->save( clone $view->item );
 			$manager->commit();
+
+            \Aimeos\MShop::create( $this->getContext(), 'postindex' )->rebuild( [$item->getId() => $item] );
 
 			return $this->redirect( 'post', $view->param( 'next' ), $view->item->getId(), 'save' );
 		}

@@ -18,6 +18,6 @@ namespace Aimeos\MShop\Post\Manager;
  * @subpackage Post
  */
 interface Iface
-	extends \Aimeos\MShop\Common\Manager\Iface, \Aimeos\MShop\Common\Manager\Find\Iface
+	extends \Aimeos\MShop\Common\Manager\Iface, \Aimeos\MShop\Common\Manager\Find\Iface, \Aimeos\MShop\Common\Manager\ListsRef\Iface
 {
 }

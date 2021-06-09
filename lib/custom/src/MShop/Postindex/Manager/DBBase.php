@@ -19,7 +19,7 @@ namespace Aimeos\MShop\Postindex\Manager;
  */
 abstract class DBBase
 	extends \Aimeos\MShop\Common\Manager\Base
-	implements \Aimeos\MShop\Post\Manager\Iface
+	implements \Aimeos\MShop\Common\Manager\Iface, \Aimeos\MShop\Common\Manager\Find\Iface
 {
 	private $manager;
 
