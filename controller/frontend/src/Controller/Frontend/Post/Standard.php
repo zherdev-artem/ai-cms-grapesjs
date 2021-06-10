@@ -287,18 +287,42 @@ class Standard
 	/**
 	 * Sets the sorting of the result list
 	 *
-	 * @param string|null $key Sorting key of the result list like "post.label", null for no sorting
+	 * @param string|null $key Sorting of the result list like "name", "-name",
+	 * 	"ctime, "-ctime" or comma separated combinations and null for no sorting
 	 * @return \Aimeos\Controller\Frontend\Post\Iface Post controller for fluent interface
 	 * @since 2021.04
 	 */
 	public function sort( string $key = null ) : Iface
 	{
-		$list = ( $key ? explode( ',', $key ) : [] );
+		$list = $this->splitKeys( $key );
 
 		foreach( $list as $sortkey )
 		{
 			$direction = ( $sortkey[0] === '-' ? '-' : '+' );
-            $this->addExpression( $this->filter->sort( $direction, ltrim( $sortkey, '+-' ) ) );
+			$sortkey = ltrim( $sortkey, '+-' );
+
+			switch( $sortkey )
+			{
+				case 'relevance':
+					break;
+
+				case 'ctime':
+					$this->addExpression( $this->filter->sort( $direction, 'post.ctime' ) );
+					break;
+
+				case 'name':
+					$langid = $this->getContext()->getLocale()->getLanguageId();
+
+					$cmpfunc = $this->filter->make( 'index.text:name', [$langid] );
+					$this->addExpression( $this->filter->compare( '!=', $cmpfunc, null ) );
+
+					$sortfunc = $this->filter->make( 'sort:index.text:name', [$langid] );
+					$this->addExpression( $this->filter->sort( $direction, $sortfunc ) );
+					break;
+
+				default:
+					$this->addExpression( $this->filter->sort( $direction, $sortkey ) );
+			}
 		}
 
 		return $this;
