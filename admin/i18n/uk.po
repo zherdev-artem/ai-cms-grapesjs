@@ -60,11 +60,11 @@ msgstr ""
 
 #: jqadm/templates/cms/item-standard.php:63
 msgid "CMS page"
-msgstr ""
+msgstr "Cторінка"
 
 #: jqadm/templates/cms/list-standard.php:95
 msgid "CMS pages"
-msgstr ""
+msgstr "Сторінки"
 
 #: jqadm/templates/type/cms/lists/list-standard.php:72
 #: jqadm/templates/type/cms/lists/item-standard.php:130
@@ -73,12 +73,12 @@ msgstr "Код"
 
 #: jqadm/templates/cms/list-standard.php:159
 msgid "Columns"
-msgstr ""
+msgstr "Колонки"
 
 #: jqadm/templates/type/cms/lists/list-standard.php:218
 #: jqadm/templates/cms/list-standard.php:217
 msgid "Copy"
-msgstr ""
+msgstr "Копіювати"
 
 #: jqadm/templates/type/cms/lists/list-standard.php:217
 #: jqadm/templates/cms/list-standard.php:216
@@ -97,7 +97,7 @@ msgstr "Створено"
 #: jqadm/templates/cms/list-standard.php:141
 #: jqadm/templates/cms/list-standard.php:223
 msgid "Delete"
-msgstr ""
+msgstr "Видалити"
 
 #: jqadm/templates/type/cms/lists/list-standard.php:129
 #: jqadm/templates/cms/list-standard.php:140
@@ -404,7 +404,7 @@ msgstr ""
 #: jqadm/src/Admin/JQAdm/Cms/Standard.php:13
 #, php-format
 msgid "cms"
-msgstr ""
+msgstr "Сторінки"
 
 #: jqadm/src/Admin/JQAdm/Cms/Content/Standard.php:13
 #, php-format
@@ -475,3 +475,21 @@ msgstr ""
 #, php-format
 msgid "type/cms/lists"
 msgstr ""
+
+msgid "post"
+msgstr "Записи"
+
+msgid "Post"
+msgstr "Запис"
+
+msgid "Posts"
+msgstr "Записи"
+
+msgid "block"
+msgstr "Блоки"
+
+msgid "Block"
+msgstr "Блок"
+
+msgid "Blocks"
+msgstr "Блоки"
