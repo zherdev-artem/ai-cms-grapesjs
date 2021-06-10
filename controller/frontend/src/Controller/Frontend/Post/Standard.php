@@ -293,16 +293,14 @@ class Standard
 	 */
 	public function sort( string $key = null ) : Iface
 	{
-		$sort = [];
 		$list = ( $key ? explode( ',', $key ) : [] );
 
 		foreach( $list as $sortkey )
 		{
 			$direction = ( $sortkey[0] === '-' ? '-' : '+' );
-			$sort[] = $this->filter->sort( $direction, ltrim( $sortkey, '+-' ) );
+            $this->addExpression( $this->filter->sort( $direction, ltrim( $sortkey, '+-' ) ) );
 		}
 
-		$this->filter->setSortations( $sort );
 		return $this;
 	}
 
