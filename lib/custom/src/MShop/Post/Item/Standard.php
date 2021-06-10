@@ -48,9 +48,11 @@ class Standard
 	{
 		if( ( $item = $this->getRefItems( 'text', $type )->first() ) !== null ) {
 			return $item->getContent();
-		}
+		} else if ( $type === 'url' ) {
+            return $this->getUrl();
+        }
 
-		return $type === 'url' ? $this->getUrl() : $this->getLabel();
+		return '';
 	}
 
 	/**
