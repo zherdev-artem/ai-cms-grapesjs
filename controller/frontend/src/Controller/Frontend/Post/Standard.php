@@ -52,17 +52,17 @@ class Standard
 
 
 	/**
-	 * Adds generic condition for filtering
+	 * Adds generic condition for filtering posts
 	 *
 	 * @param string $operator Comparison operator, e.g. "==", "!=", "<", "<=", ">=", ">", "=~", "~="
 	 * @param string $key Search key defined by the post manager, e.g. "post.status"
 	 * @param array|string $value Value or list of values to compare to
-	 * @return \Aimeos\Controller\Frontend\Post\Iface Post controller for fluent interface
-	 * @since 2021.04
+	 * @return \Aimeos\Controller\Frontend\Product\Iface Product controller for fluent interface
+	 * @since 2019.04
 	 */
 	public function compare( string $operator, string $key, $value ) : Iface
 	{
-		$this->conditions[] = $this->filter->compare( $operator, $key, $value );
+		$this->addExpression( $this->filter->compare( $operator, $key, $value ) );
 		return $this;
 	}
 
@@ -106,7 +106,7 @@ class Standard
 	}
 
     /**
-	 * Returns the product for the given product URL name
+	 * Returns the post for the given post URL name
 	 *
 	 * @param string $code Post category code
 	 * @return \Aimeos\MShop\Post\Item\Iface Post item including the referenced domains items
