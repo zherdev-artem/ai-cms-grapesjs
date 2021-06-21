@@ -62,9 +62,8 @@ class Standard
 	 */
 	public function getUrl() : string
 	{
-		return $this->get( 'post.url', '' );
+		return $this->get( 'post.url' ) ?: '/' . \Aimeos\MW\Str::slug( $this->getLabel() );
 	}
-
 
 	/**
 	 * Sets the URL of the post item.
@@ -72,7 +71,7 @@ class Standard
 	 * @param string $value URL of the post item
 	 * @return \Aimeos\MShop\Post\Item\Iface Post item for chaining method calls
 	 */
-	public function setUrl( string $value ) : \Aimeos\MShop\Post\Item\Iface
+	public function setUrl( ?string $value ) : \Aimeos\MShop\Post\Item\Iface
 	{
 		return $this->set( 'post.url', \Aimeos\MW\Str::slug( $value ));
 	}

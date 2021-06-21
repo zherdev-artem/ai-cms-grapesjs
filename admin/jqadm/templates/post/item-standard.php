@@ -149,19 +149,6 @@ $params = $this->get( 'pageParams', [] );
 											</div>
 										</div>
 										<div class="form-group row mandatory">
-											<label class="col-sm-4 form-control-label help"><?= $enc->html( $this->translate( 'admin', 'URL' ) ) ?></label>
-											<div class="col-sm-8">
-												<input class="form-control item-url" type="text" required="required" tabindex="1"
-													name="<?= $enc->attr( $this->formparam( array( 'item', 'post.url' ) ) ) ?>"
-													placeholder="<?= $enc->attr( $this->translate( 'admin', 'Unique page URL (required)' ) ) ?>"
-													value="<?= $enc->attr( $this->get( 'itemData/post.url' ) ) ?>"
-													<?= $this->site()->readonly( $this->get( 'itemData/post.siteid' ) ) ?> />
-											</div>
-											<div class="col-sm-12 form-text text-muted help-text">
-												<?= $enc->html( $this->translate( 'admin', 'Unique page URL, e.g. "/page-name"' ) ) ?>
-											</div>
-										</div>
-										<div class="form-group row mandatory">
 											<label class="col-sm-4 form-control-label help"><?= $enc->html( $this->translate( 'admin', 'Title' ) ) ?></label>
 											<div class="col-sm-8">
 												<input class="form-control item-label" type="text" required="required" tabindex="1"
@@ -172,6 +159,19 @@ $params = $this->get( 'pageParams', [] );
 											</div>
 											<div class="col-sm-12 form-text text-muted help-text">
 												<?= $enc->html( $this->translate( 'admin', 'Page title, will be used on the web site if no title for the language is available' ) ) ?>
+											</div>
+										</div>
+                                        <div class="form-group row optional">
+											<label class="col-sm-4 form-control-label help"><?= $enc->html( $this->translate( 'admin', 'URL' ) ) ?></label>
+											<div class="col-sm-8">
+												<input class="form-control item-url" type="text" tabindex="1"
+													name="<?= $enc->attr( $this->formparam( array( 'item', 'post.url' ) ) ) ?>"
+													placeholder="<?= $enc->attr( $this->translate( 'admin', 'Unique post URL' ) ) ?>"
+													value="<?= $enc->attr( $this->get( 'itemData/post.url' ) ) ?>"
+													<?= $this->site()->readonly( $this->get( 'itemData/post.siteid' ) ) ?> />
+											</div>
+											<div class="col-sm-12 form-text text-muted help-text">
+												<?= $enc->html( $this->translate( 'admin', 'Unique post URL, e.g. "/page-name"' ) ) ?>
 											</div>
 										</div>
 									</div>
