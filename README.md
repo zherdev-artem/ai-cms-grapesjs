@@ -3,6 +3,7 @@
 - The Category domain for grouping posts
 - Indexing Post Text for Full Search
 - Indexing Post Category for retrieve by id and code
+- CMS, Post, Category Sitemap jobs
 
 
 <a href="https://aimeos.org/">
