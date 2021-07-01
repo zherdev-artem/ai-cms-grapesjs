@@ -252,81 +252,81 @@ Aimeos.CMSContent = {
 					style: {'max-width': '100%'}
 				}
 			},
-			'col-1': {
-				category: 'Columns',
-				label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="24" height="18" x="10" y="9" ry="2" ry="3"></rect></svg><div class="gjs-block-label">1 col</div>',
-				attributes: { class: 'fa' },
-				content: {
-					type: 'cols',
-					cols: 1
-				},
-			},
-			'col-2': {
-				category: 'Columns',
-				label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="12" height="18" x="8" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="12" height="18" x="20" y="9" ry="2" ry="1"></rect></svg><div class="gjs-block-label">2 cols</div>',
-				attributes: { class: 'fa' },
-				content: {
-					type: 'cols',
-					cols: 2
-				},
-			},
-			'col-1:2': {
-				category: 'Columns',
-				label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="9" height="18" x="8" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="15" height="18" x="17" y="9" ry="2" ry="1"></rect></svg><div class="gjs-block-label">1:2 cols</div>',
-				attributes: { class: 'fa' },
-				content: {
-					type: 'cols',
-					cols: 2,
-					widths: [4, 8]
-				},
-			},
-			'col-2:1': {
-				category: 'Columns',
-				label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="15" height="18" x="8" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="9" height="18" x="23" y="9" ry="2" ry="1"></rect></svg><div class="gjs-block-label">2:1 cols</div>',
-				attributes: { class: 'fa' },
-				content: {
-					type: 'cols',
-					cols: 2,
-					widths: [8, 4]
-				},
-			},
-			'col-3': {
-				category: 'Columns',
-				label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="8" height="18" x="8" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="8" height="18" x="16" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="8" height="18" x="24" y="9" ry="2" ry="1"></rect></svg><div class="gjs-block-label">3 cols</div>',
-				attributes: { class: 'fa' },
-				content: {
-					type: 'cols',
-					cols: 3
-				},
-			},
-			'contact': {
-				category: 'Extra',
-				label: 'Contact',
-				attributes: { class: 'fa fa-envelope-o' },
-				content: `<form class="contact-form" method="POST" action="">
-					<!-- cms.page.contact.csrf -->
-					<input class="csrf-token" type="hidden" name="%csrf.name%" value="%csrf.value%" />
-					<!-- cms.page.contact.csrf -->
-					<div class="form-group row contact-name">
-						<label class="col-sm-4 form-control-label">Name</label>
-						<div class="col-sm-8"><input class="form-control" name="contact[name]" required /></div>
-					</div>
-					<div class="form-group row contact-email">
-						<label class="col-sm-4 form-control-label">E-Mail</label>
-						<div class="col-sm-8"><input class="form-control" name="contact[email]" type="email" required /></div>
-					</div>
-					<div class="form-group row contact-message">
-						<label class="col-sm-4 form-control-label">Text</label>
-						<div class="col-sm-8"><textarea class="form-control" name="contact[message]" required rows="6"></textarea></div>
-					</div>
-					<div class="contact-pot" style="display: none">
-						<input name="contact[url]" />
-					</div>
-					<div class="form-group contact-button">
-						<button type="submit" class="btn btn-primary d-block mx-auto">Submit</button>
-					</div>
-				</form>`
-			},
+			// 'col-1': {
+			// 	category: 'Columns',
+			// 	label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="24" height="18" x="10" y="9" ry="2" ry="3"></rect></svg><div class="gjs-block-label">1 col</div>',
+			// 	attributes: { class: 'fa' },
+			// 	content: {
+			// 		type: 'cols',
+			// 		cols: 1
+			// 	},
+			// },
+			// 'col-2': {
+			// 	category: 'Columns',
+			// 	label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="12" height="18" x="8" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="12" height="18" x="20" y="9" ry="2" ry="1"></rect></svg><div class="gjs-block-label">2 cols</div>',
+			// 	attributes: { class: 'fa' },
+			// 	content: {
+			// 		type: 'cols',
+			// 		cols: 2
+			// 	},
+			// },
+			// 'col-1:2': {
+			// 	category: 'Columns',
+			// 	label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="9" height="18" x="8" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="15" height="18" x="17" y="9" ry="2" ry="1"></rect></svg><div class="gjs-block-label">1:2 cols</div>',
+			// 	attributes: { class: 'fa' },
+			// 	content: {
+			// 		type: 'cols',
+			// 		cols: 2,
+			// 		widths: [4, 8]
+			// 	},
+			// },
+			// 'col-2:1': {
+			// 	category: 'Columns',
+			// 	label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="15" height="18" x="8" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="9" height="18" x="23" y="9" ry="2" ry="1"></rect></svg><div class="gjs-block-label">2:1 cols</div>',
+			// 	attributes: { class: 'fa' },
+			// 	content: {
+			// 		type: 'cols',
+			// 		cols: 2,
+			// 		widths: [8, 4]
+			// 	},
+			// },
+			// 'col-3': {
+			// 	category: 'Columns',
+			// 	label: '<svg width="40" height="36" viewBox="0 0 40 36"><rect style="fill:none;stroke-width:2" width="8" height="18" x="8" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="8" height="18" x="16" y="9" ry="2" ry="1"></rect><rect style="fill:none;stroke-width:2" width="8" height="18" x="24" y="9" ry="2" ry="1"></rect></svg><div class="gjs-block-label">3 cols</div>',
+			// 	attributes: { class: 'fa' },
+			// 	content: {
+			// 		type: 'cols',
+			// 		cols: 3
+			// 	},
+			// },
+			// 'contact': {
+			// 	category: 'Extra',
+			// 	label: 'Contact',
+			// 	attributes: { class: 'fa fa-envelope-o' },
+			// 	content: `<form class="contact-form" method="POST" action="">
+			// 		<!-- cms.page.contact.csrf -->
+			// 		<input class="csrf-token" type="hidden" name="%csrf.name%" value="%csrf.value%" />
+			// 		<!-- cms.page.contact.csrf -->
+			// 		<div class="form-group row contact-name">
+			// 			<label class="col-sm-4 form-control-label">Name</label>
+			// 			<div class="col-sm-8"><input class="form-control" name="contact[name]" required /></div>
+			// 		</div>
+			// 		<div class="form-group row contact-email">
+			// 			<label class="col-sm-4 form-control-label">E-Mail</label>
+			// 			<div class="col-sm-8"><input class="form-control" name="contact[email]" type="email" required /></div>
+			// 		</div>
+			// 		<div class="form-group row contact-message">
+			// 			<label class="col-sm-4 form-control-label">Text</label>
+			// 			<div class="col-sm-8"><textarea class="form-control" name="contact[message]" required rows="6"></textarea></div>
+			// 		</div>
+			// 		<div class="contact-pot" style="display: none">
+			// 			<input name="contact[url]" />
+			// 		</div>
+			// 		<div class="form-group contact-button">
+			// 			<button type="submit" class="btn btn-primary d-block mx-auto">Submit</button>
+			// 		</div>
+			// 	</form>`
+			// },
 		},
 
 		components: {
@@ -361,74 +361,133 @@ Aimeos.CMSContent = {
 				});
 			},
 
-			'cols': function(editor) {
-				editor.DomComponents.addType('cols', {
-					isComponent: el => el.tagName === 'DIV' && el.classList.contains('row') ? {type: 'cols'} : false,
-					model: {
-						defaults: {
-							tagName: 'div',
-							draggable: '.container-fluid, .col',
-							droppable: true,
-							attributes: {
-								class: 'row',
-								'data-gjs-droppable': '.col',
-								'data-gjs-name': 'Row'
-							},
-							components: model => {
-								const cols = model.props().cols || 1;
-								let result = '';
+			// 'cols': function(editor) {
+			// 	editor.DomComponents.addType('cols', {
+			// 		isComponent: el => el.tagName === 'DIV' && el.classList.contains('row') ? {type: 'cols'} : false,
+			// 		model: {
+			// 			defaults: {
+			// 				tagName: 'div',
+			// 				draggable: '.container-fluid, .col',
+			// 				droppable: true,
+			// 				attributes: {
+			// 					class: 'row',
+			// 					'data-gjs-droppable': '.col',
+			// 					'data-gjs-name': 'Row'
+			// 				},
+			// 				components: model => {
+			// 					const cols = model.props().cols || 1;
+			// 					let result = '';
+            //
+			// 					for(let i=0; i<cols; i++) {
+			// 						result += '<div class="col" data-gjs-draggable=".row" data-gjs-name="Column"></div>';
+			// 					}
+			// 					return result;
+			// 				},
+			// 				traits: [{
+			// 					type: 'select',
+			// 					label: 'Breakpoint',
+			// 					name: 'break',
+			// 					options: [
+			// 						{id: 'col', name: 'None'},
+			// 						{id: 'col-sm', name: 'S (576px)'},
+			// 						{id: 'col-md', name: 'M (768px)'},
+			// 						{id: 'col-lg', name: 'L (992px)'},
+			// 						{id: 'col-xl', name: 'XL (1200px)'},
+			// 					]
+			// 				},{
+			// 					type: 'select',
+			// 					label: 'Spacing',
+			// 					name: 'gutters',
+			// 					options: [
+			// 						{id: 'no-gutters', name: 'No'},
+			// 						{id: '', name: 'Yes'},
+			// 					]
+			// 				}]
+			// 			},
+			// 			init() {
+			// 				this.on('change:attributes:break', this.onBreakpointChange);
+			// 				this.on('change:attributes:gutters', this.onGutterChange);
+			// 			},
+			// 			onBreakpointChange() {
+			// 				const bsclass = this.getAttributes().break || 'col';
+            //
+			// 				this.attributes.components.models.forEach(function(item, idx) {
+			// 					if(item.attributes.tagName === 'div') {
+			// 						item.removeClass('col');
+			// 						item.removeClass('col-sm');
+			// 						item.removeClass('col-md');
+			// 						item.removeClass('col-lg');
+			// 						item.removeClass('col-xl');
+			// 						item.addClass(bsclass);
+			// 					}
+			// 				});
+			// 			},
+			// 			onGutterChange() {
+			// 				this.removeClass('no-gutters');
+			// 				this.addClass(this.getAttributes().gutters || '');
+			// 			}
+			// 		}
+			// 	});
+			// },
 
-								for(let i=0; i<cols; i++) {
-									result += '<div class="col" data-gjs-draggable=".row" data-gjs-name="Column"></div>';
-								}
-								return result;
-							},
-							traits: [{
-								type: 'select',
-								label: 'Breakpoint',
-								name: 'break',
-								options: [
-									{id: 'col', name: 'None'},
-									{id: 'col-sm', name: 'S (576px)'},
-									{id: 'col-md', name: 'M (768px)'},
-									{id: 'col-lg', name: 'L (992px)'},
-									{id: 'col-xl', name: 'XL (1200px)'},
-								]
-							},{
-								type: 'select',
-								label: 'Spacing',
-								name: 'gutters',
-								options: [
-									{id: 'no-gutters', name: 'No'},
-									{id: '', name: 'Yes'},
-								]
-							}]
-						},
-						init() {
-							this.on('change:attributes:break', this.onBreakpointChange);
-							this.on('change:attributes:gutters', this.onGutterChange);
-						},
-						onBreakpointChange() {
-							const bsclass = this.getAttributes().break || 'col';
+			'image': function (editor) {
+                let imgTraits = editor.DomComponents.getType('image').model.prototype.defaults.traits;
+                editor.Components.addType('image', {
+                    model: {
+                        defaults: {
+                            traits: [
+                                ...imgTraits,
+                                'title'
+                            ]
+                        }
+                    },
+                    view: {
+                        onActive(ev) {
+                            ev && ev.stopPropagation();
+                            const { model } = this;
+                            editor.runCommand('core:open-assets', {
+                                target: model,
+                                types: ['image'],
+                                onSelect(asset) {
+                                    const srcset = asset.get('srcset');
+                                    srcset && model.addAttributes({ srcset })
+                                }
+                            });
+                        }
+                    }
+                })
+            },
+            'link': function (editor) {
+			    let linkTraits = editor.DomComponents.getType('link').model.prototype.defaults.traits;
 
-							this.attributes.components.models.forEach(function(item, idx) {
-								if(item.attributes.tagName === 'div') {
-									item.removeClass('col');
-									item.removeClass('col-sm');
-									item.removeClass('col-md');
-									item.removeClass('col-lg');
-									item.removeClass('col-xl');
-									item.addClass(bsclass);
-								}
-							});
-						},
-						onGutterChange() {
-							this.removeClass('no-gutters');
-							this.addClass(this.getAttributes().gutters || '');
-						}
-					}
-				});
-			}
+                editor.Components.addType('link', {
+                    model: {
+                        defaults: {
+                            traits: [
+                                ...linkTraits,
+                                {
+                                    type: 'button',
+                                    // ...
+                                    text: 'Выбрать файл',
+                                    full: true, // Full width button
+                                    command: (editor, item) => {
+                                        const { model } = item.target.view;
+                                        editor.runCommand('core:open-assets', {
+                                            target: model,
+                                            types: ['image'],
+                                            onSelect(asset) {
+                                                const href = asset.get('src');
+                                                href && model.addAttributes({ href })
+                                            }
+                                        });
+                                    },
+
+                                }
+                            ]
+                        }
+                    },
+                });
+            }
 		},
 
 		styles: `
@@ -491,8 +550,8 @@ Aimeos.CMSContent = {
 			}
 
 			// load plugins after blocks to enforce order
-			const opts = setup.config.pluginsOpts;
-			grapesjs.plugins.add('grapesjs-table', window['grapesjs-table'].default(editor, opts['grapesjs-table']));
+			// const opts = setup.config.pluginsOpts;
+			// grapesjs.plugins.add('grapesjs-table', window['grapesjs-table'].default(editor, opts['grapesjs-table']));
 
 			// add custom styles
 			editor.DomComponents.getWrapper().set('attributes', {'class': 'container-fluid'});
@@ -516,25 +575,26 @@ Aimeos.CMSContent = {
 				}
 			});
 
+            const imgType = editor.AssetManager.getType('image');
 
 			// @todo: Remove after GrapesJS version update
-			editor.AssetManager.addType('imageset', {
+			editor.AssetManager.addType('image', {
 				isType(value) {
-					if (typeof value == 'object' && value.type == 'imageset') {
+					if (typeof value == 'object' && value.type == 'image') {
 						return value;
 					}
 				},
-				model: {
+				model: imgType.model.extend({
 					defaults: {
-					  type:  'imageset',
-					  srcset: {},
+					  type:  'image',
+					  srcset: '',
 					  name: 'Responsive image set',
 					},
 					getName() {
 					  return this.get('name');
 					}
-				},
-				view: {
+				}),
+				view: imgType.view.extend({
 					getPreview() {
 					  return `<img src="${this.model.get('src') || ''}" style="text-align: center" />`;
 					},
@@ -543,14 +603,21 @@ Aimeos.CMSContent = {
 					},
 					updateTarget(target) {
 						if (target.get('type') == 'image') {
-							target.set('srcset', this.model.get('srcset'));
-							target.set('src', this.model.get('src'));
+							target.addAttributes({
+                                'srcset': this.model.get('srcset'),
+                                'src': this.model.get('src')
+                            });
 						}
 					},
-				},
+				}),
 			});
 
-			editor.AssetManager.add(media);
+			if (media && media.length) {
+                for (let m of media) {
+                    m.type = 'image';
+                    editor.AssetManager.add(m);
+                }
+            }
 		}
 	},
 
