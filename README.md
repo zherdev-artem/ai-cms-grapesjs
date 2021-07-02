@@ -1,4 +1,5 @@
 # Fork Features
+- GrapesJS 0.17.19
 - The Post domain
 - The Category domain for grouping posts
 - Indexing Post Text for Full Search
