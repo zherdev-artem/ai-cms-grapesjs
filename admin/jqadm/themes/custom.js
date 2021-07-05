@@ -476,7 +476,7 @@ Aimeos.CMSContent = {
                                             target: model,
                                             types: ['image'],
                                             onSelect(asset) {
-                                                const href = asset.get('src');
+                                                const href = asset.get('url') ? asset.get('url') : asset.get('src');
                                                 href && model.addAttributes({ href })
                                             }
                                         });
