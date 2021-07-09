@@ -3,8 +3,16 @@
  */
 
 
- .aimeos .main-sidebar .menuitem-cms .icon:before {
+.aimeos .main-sidebar .menuitem-cms .icon:before {
+	content: "\f016";
+}
+
+.aimeos .main-sidebar .menuitem-block .icon:before {
 	content: "\f00a";
+}
+
+.aimeos .main-sidebar .menuitem-category .icon:before {
+	content: "\f0e8";
 }
 
 .aimeos .grapesjs-editor {

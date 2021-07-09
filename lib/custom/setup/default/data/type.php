@@ -15,6 +15,7 @@ return [
 		['domain' => 'cms', 'code' => 'name', 'label' => 'Name', 'status' => 1],
 		['domain' => 'cms', 'code' => 'meta-keyword', 'label' => 'Meta keywords', 'status' => 1],
 		['domain' => 'cms', 'code' => 'meta-description', 'label' => 'Meta description', 'status' => 1],
+        ['domain' => 'cms', 'code' => 'url', 'label' => 'URL segment', 'status' => 1],
 		['domain' => 'cms', 'code' => 'content', 'label' => 'Content', 'status' => 1],
 	],
 

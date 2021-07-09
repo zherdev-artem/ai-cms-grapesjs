@@ -38,6 +38,22 @@ class Standard
 		$this->initListItems( $listItems, $refItems );
 	}
 
+    /**
+	 * Returns the localized text type of the item or the internal label if no name is available.
+	 *
+	 * @param string $type Text type to be returned
+	 * @return string Specified text type or label of the item
+	 */
+	public function getName( string $type = 'name' ) : string
+	{
+		if( ( $item = $this->getRefItems( 'text', $type )->first() ) !== null ) {
+			return $item->getContent();
+		} else if ( $type === 'url' ) {
+            return $this->getUrl();
+        }
+
+		return '';
+	}
 
 	/**
 	 * Returns the URL of the post item.
@@ -46,9 +62,8 @@ class Standard
 	 */
 	public function getUrl() : string
 	{
-		return $this->get( 'post.url', '' );
+		return $this->get( 'post.url' ) ?: '/' . \Aimeos\MW\Str::slug( $this->getLabel() );
 	}
-
 
 	/**
 	 * Sets the URL of the post item.
@@ -56,13 +71,9 @@ class Standard
 	 * @param string $value URL of the post item
 	 * @return \Aimeos\MShop\Post\Item\Iface Post item for chaining method calls
 	 */
-	public function setUrl( string $value ) : \Aimeos\MShop\Post\Item\Iface
+	public function setUrl( ?string $value ) : \Aimeos\MShop\Post\Item\Iface
 	{
-		$url = \Aimeos\Map::explode( '/', trim( $value, '/' ) )->map( function( $segment ) {
-			return \Aimeos\MW\Str::slug( $segment );
-		} )->join( '/' );
-
-		return $this->set( 'post.url', '/' . $url );
+		return $this->set( 'post.url', \Aimeos\MW\Str::slug( $value ));
 	}
 
 
@@ -121,6 +132,28 @@ class Standard
 	{
 		return 'post';
 	}
+
+    /**
+	 * Returns the category items referencing the post
+	 *
+	 * @return \Aimeos\Map Associative list of items implementing \Aimeos\MShop\Category\Item\Iface
+	 */
+	public function getCategoryItems() : \Aimeos\Map
+	{
+		return map( $this->get( '.category', [] ) );
+	}
+
+    /**
+	 * Returns the first category item referencing the post
+	 */
+    public function getCategory() {
+        $categories = $this->getCategoryItems();
+
+        if ( $categories->isEmpty() )
+            return null;
+
+        return $categories->first();
+    }
 
 
 	/**

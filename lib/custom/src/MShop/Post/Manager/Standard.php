@@ -644,6 +644,15 @@ class Standard
 			throw $e;
 		}
 
+        if( isset( $ref['category'] ) || in_array( 'category', $ref, true ) )
+		{
+			$domains = isset( $ref['category'] ) && is_array( $ref['category'] ) ? $ref['category'] : [];
+
+			foreach( $this->getDomainRefItems( array_keys( $map ), 'category', $domains ) as $postId => $list ) {
+				$map[$postId]['.category'] = $list;
+			}
+		}
+
 		return $this->buildItems( $map, $ref, 'post' );
 	}
 
@@ -689,5 +698,59 @@ class Standard
 	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [] ) : \Aimeos\MShop\Common\Item\Iface
 	{
 		return new \Aimeos\MShop\Post\Item\Standard( $values, $listItems, $refItems );
+	}
+
+    /**
+	 * Returns the associative list of domain items referencing the post
+	 *
+	 * @param array $ids List of post IDs
+	 * @param string $domain Domain name, e.g. "catalog" or "supplier"
+	 * @param array $ref List of referenced items that should be fetched too
+	 * @return array Associative list of post IDs as keys and list of domain items as values
+	 */
+	protected function getDomainRefItems( array $ids, string $domain, array $ref ) : array
+	{
+		$keys = $map = $result = [];
+		$context = $this->getContext();
+
+		foreach( $ids as $id ) {
+			$keys[] = 'post|default|' . $id;
+		}
+
+
+		$manager = \Aimeos\MShop::create( $context, $domain . '/lists' );
+
+		$search = $manager->filter( true )->slice( 0, 0x7fffffff );
+		$search->setConditions( $search->and( [
+			$search->compare( '==', $domain . '.lists.key', $keys ),
+			$search->getConditions(),
+		] ) );
+
+		foreach( $manager->search( $search ) as $listItem ) {
+			$map[$listItem->getParentId()][] = $listItem->getRefId();
+		}
+
+		$manager = \Aimeos\MShop::create( $context, $domain );
+
+		$search = $manager->filter( true )->slice( 0, 0x7fffffff );
+		$search->setConditions( $search->and( [
+			$search->compare( '==', $domain . '.id', array_keys( $map ) ),
+			$search->getConditions(),
+		] ) );
+
+		$items = $manager->search( $search, $ref );
+
+
+		foreach( $map as $parentId => $list )
+		{
+			if( isset( $items[$parentId] ) )
+			{
+				foreach( $list as $сhildId ) {
+					$result[$сhildId][$parentId] = $items[$parentId];
+				}
+			}
+		}
+
+		return $result;
 	}
 }

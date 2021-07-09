@@ -8,6 +8,7 @@ return array(
 		'ai-admin-jsonadm',
 		'ai-client-html',
 		'ai-client-jsonapi',
+        'ai-controller-jobs',
 		'ai-controller-frontend',
 	),
 	'include' => array(
@@ -15,6 +16,7 @@ return array(
 		'client/html/src',
 		'client/jsonapi/src',
 		'controller/frontend/src',
+        'controller/jobs/src',
 		'admin/jsonadm/src',
 		'admin/jqadm/src',
 	),
@@ -24,6 +26,7 @@ return array(
 		'client' => 'client/i18n',
 		'client/code' => 'client/i18n/code',
 		'controller/frontend' => 'controller/frontend/i18n',
+        'controller/jobs' => 'controller/jobs/i18n',
 		'mshop' => 'lib/custom/i18n',
 	),
 	'config' => array(
@@ -44,6 +47,13 @@ return array(
 		),
 		'client/jsonapi/templates' => array(
 			'client/jsonapi/templates',
+		),
+        'controller/jobs' => array(
+			'controller/jobs/src',
+		),
+		'controller/jobs/templates' => array(
+			'controller/jobs/templates',
+			'client/html/templates',
 		),
 	),
 	'setup' => array(

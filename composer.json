@@ -19,10 +19,12 @@
 	"autoload": {
 		"psr-4": {
 			"Aimeos\\MShop\\": "lib/mshoplib/src/MShop/",
+            "Aimeos\\Controller\\Jobs\\": "controller/jobs/src/Controller/Jobs/",
 			"Aimeos\\Admin\\JQAdm\\": "admin/jqadm/src/Admin/JQAdm/"
 		},
 		"classmap": [
 			"admin/jqadm/src",
+            "controller/jobs/src",
 			"lib/custom/src"
 		]
 	}

@@ -5,7 +5,7 @@ return [
 		'cms' => [
 			'page' => [
 				'template-error' => 'cms/page/body-error'
-			]
+            ]
 		]
 	],
 	'jsonapi' => [

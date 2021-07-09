@@ -21,10 +21,16 @@ return [
 			],
 			'subparts' => [
 				'content' => 'content',
-				'seo' => 'seo',
+				'meta' => 'meta',
 				'media' => 'media',
                 'category' => 'category'
 			],
+            'fields' => [
+                'post.status',
+                'post.url',
+                'post.label',
+                'category.label'
+            ]
 		],
         'category' => [
             'domains' => [

@@ -280,8 +280,9 @@ class Standard
 			$media[] = [
 				'name' => $mediaItem->getLabel(),
 				'src' => $view->content( $mediaItem->getPreview( true ) ),
+                'url' => $view->content( $mediaItem->getUrl() ),
 				'srcset' => join( ', ', $srcset),
-				'type' => 'imageset' // @todo: remove after GrapesJs update
+				'type' => 'image'
 			];
 		}
 

@@ -74,6 +74,7 @@ $columnList = [
 	'post.status' => $this->translate( 'admin', 'Status' ),
 	'post.url' => $this->translate( 'admin', 'URL' ),
 	'post.label' => $this->translate( 'admin', 'Title' ),
+    'category.label' => $this->translate( 'admin', 'Catalog' ),
 	'post.ctime' => $this->translate( 'admin', 'Created' ),
 	'post.mtime' => $this->translate( 'admin', 'Modified' ),
 	'post.editor' => $this->translate( 'admin', 'Editor' ),
@@ -176,6 +177,7 @@ $columnList = [
 								'-2' => $this->translate( 'mshop/code', 'status:-2' ),
 							]],
 							'post.url' => [],
+                            'category.label' => [],
 							'post.label' => [],
 							'post.ctime' => ['op' => '-', 'type' => 'datetime-local'],
 							'post.mtime' => ['op' => '-', 'type' => 'datetime-local'],
@@ -199,6 +201,9 @@ $columnList = [
 						<?php endif ?>
 						<?php if( in_array( 'post.label', $fields ) ) : ?>
 							<td class="post-label"><a class="items-field" href="<?= $url ?>"><?= $enc->html( $item->getLabel() ) ?></a></td>
+						<?php endif ?>
+                        <?php if( in_array( 'category.label', $fields ) ) : ?>
+							<td class="category-label"><a class="items-field" href="<?= $url ?>"><?= $enc->html( ( $cat = $item->getCategory() ) ? $cat->getLabel() : "" ) ?></a></td>
 						<?php endif ?>
 						<?php if( in_array( 'post.ctime', $fields ) ) : ?>
 							<td class="post-ctime"><a class="items-field" href="<?= $url ?>"><?= $enc->html( $item->getTimeCreated() ) ?></a></td>

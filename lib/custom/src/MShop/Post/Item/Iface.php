@@ -49,4 +49,6 @@ interface Iface
 	 * @return \Aimeos\MShop\Post\Item\Iface Post page for chaining method calls
 	 */
 	public function setLabel( ?string $label ) : \Aimeos\MShop\Post\Item\Iface;
+
+    public function getCategoryItems() : \Aimeos\Map;
 }
