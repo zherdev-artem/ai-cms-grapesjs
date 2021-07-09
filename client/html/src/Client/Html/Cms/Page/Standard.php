@@ -189,7 +189,7 @@ class Standard
 	 */
 	public function getHeader( string $uid = '' ) : ?string
 	{
-		$prefixes = ['page'];
+		$prefixes = ['path'];
 		$confkey = 'client/html/cms/page';
 
 		if( ( $html = $this->getCached( 'header', $uid, $prefixes, $confkey ) ) === null )
