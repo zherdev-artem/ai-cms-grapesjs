@@ -33,19 +33,20 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetHeader()
 	{
-		$view = $this->object->getView();
-		$helper = new \Aimeos\MW\View\Helper\Param\Standard( $view, array( 'path' => '/contact' ) );
-		$view->addHelper( 'param', $helper );
-
 		$tags = [];
 		$expire = null;
+		$view = $this->object->getView();
 
-		$this->object->setView( $this->object->addData( $this->object->getView(), $tags, $expire ) );
+		$psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();
+		$helper = new \Aimeos\MW\View\Helper\Request\Standard( $view, $psr17Factory->createServerRequest( 'GET', 'https://aimeos.org/contact' ) );
+		$view->addHelper( 'request', $helper );
+
+		$this->object->setView( $this->object->addData( $view, $tags, $expire ) );
 		$output = $this->object->getHeader();
 
 		$this->assertStringContainsString( '<title>Contact page | Aimeos</title>', $output );
 		$this->assertEquals( null, $expire );
-		$this->assertEquals( 3, count( $tags ) );
+		$this->assertEquals( 2, count( $tags ) );
 	}
 
 
@@ -56,9 +57,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 			->setMethods( array( 'addData' ) )
 			->getMock();
 
-		$view = $this->object->getView();
-		$view->addHelper( 'param', new \Aimeos\MW\View\Helper\Param\Standard( $view, ['path' => 'invalid'] ) );
-		$mock->setView( $view );
+		$mock->setView( $this->object->getView() );
 
 		$mock->expects( $this->once() )->method( 'addData' )
 			->will( $this->throwException( new \RuntimeException() ) );
@@ -69,21 +68,22 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetBody()
 	{
-		$view = $this->object->getView();
-		$helper = new \Aimeos\MW\View\Helper\Param\Standard( $view, array( 'path' => '/contact' ) );
-		$view->addHelper( 'param', $helper );
-
 		$tags = [];
 		$expire = null;
+		$view = $this->object->getView();
+
+		$psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();
+		$helper = new \Aimeos\MW\View\Helper\Request\Standard( $view, $psr17Factory->createServerRequest( 'GET', 'https://aimeos.org/contact' ) );
+		$view = $view->addHelper( 'request', $helper );
 
 		$this->object->setView( $this->object->addData( $view, $tags, $expire ) );
 		$output = $this->object->getBody();
 
-		$this->assertStringStartsWith( '<section class="aimeos cms-page"', $output );
+		$this->assertStringStartsWith( '<section class="aimeos cms-page', $output );
 		$this->assertStringContainsString( '<h1>Hello!</h1>', $output );
 
 		$this->assertEquals( null, $expire );
-		$this->assertEquals( 3, count( $tags ) );
+		$this->assertEquals( 2, count( $tags ) );
 	}
 
 
@@ -94,9 +94,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 			->setMethods( array( 'addData' ) )
 			->getMock();
 
-		$view = $this->object->getView();
-		$view->addHelper( 'param', new \Aimeos\MW\View\Helper\Param\Standard( $view, ['path' => 'invalid'] ) );
-		$mock->setView( $view );
+		$mock->setView( $this->object->getView() );
 
 		$mock->expects( $this->once() )->method( 'addData' )
 			->will( $this->throwException( new \Aimeos\Client\Html\Exception() ) );
@@ -112,9 +110,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 			->setMethods( array( 'addData' ) )
 			->getMock();
 
-		$view = $this->object->getView();
-		$view->addHelper( 'param', new \Aimeos\MW\View\Helper\Param\Standard( $view, ['path' => 'invalid'] ) );
-		$mock->setView( $view );
+		$mock->setView( $this->object->getView() );
 
 		$mock->expects( $this->once() )->method( 'addData' )
 			->will( $this->throwException( new \Aimeos\Controller\Frontend\Exception() ) );
@@ -130,9 +126,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 			->setMethods( array( 'addData' ) )
 			->getMock();
 
-		$view = $this->object->getView();
-		$view->addHelper( 'param', new \Aimeos\MW\View\Helper\Param\Standard( $view, ['path' => 'invalid'] ) );
-		$mock->setView( $view );
+		$mock->setView( $this->object->getView() );
 
 		$mock->expects( $this->once() )->method( 'addData' )
 			->will( $this->throwException( new \Aimeos\MShop\Exception() ) );
@@ -148,9 +142,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 			->setMethods( array( 'addData' ) )
 			->getMock();
 
-		$view = $this->object->getView();
-		$view->addHelper( 'param', new \Aimeos\MW\View\Helper\Param\Standard( $view, ['path' => 'invalid'] ) );
-		$mock->setView( $view );
+		$mock->setView( $this->object->getView() );
 
 		$mock->expects( $this->once() )->method( 'addData' )
 			->will( $this->throwException( new \RuntimeException() ) );
