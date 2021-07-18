@@ -32,8 +32,10 @@ $config = $this->config( 'client/html/cms/page/url/config', [] );
 
 
 ?>
-<?php if( (bool) $this->config( 'client/html/cms/page/metatags', true ) === true ) : ?>
-	<?php if( isset( $this->pageCmsItem ) ) : ?>
+<?php if( isset( $this->pageCmsItem ) ) : ?>
+
+	<?php if( (bool) $this->config( 'client/html/cms/page/metatags', true ) === true ) : ?>
+
 		<title><?= $enc->html( strip_tags( $this->pageCmsItem->getName() ) ) ?> | <?= $enc->html( $this->get( 'contextSiteLabel', 'Aimeos' ) ) ?></title>
 
 		<link rel="canonical" href="<?= $enc->attr( $this->url( $target, $cntl, $action, ['path' => $this->pageCmsItem->getUrl()], $config + ['absoluteUri' => true] ) ); ?>" />
@@ -57,13 +59,15 @@ $config = $this->config( 'client/html/cms/page/url/config', [] );
 
 		<meta name="twitter:card" content="summary_large_image" />
 
-	<?php else : ?>
-
-		<title><?= $enc->html( $this->get( 'contextSiteLabel', 'Aimeos' ) ) ?></title>
-
 	<?php endif; ?>
 
+<?php elseif( $this->param( 'path' ) ) : ?>
+
+	<title><?= $enc->html( $this->get( 'contextSiteLabel', 'Aimeos' ) ) ?></title>
+
 	<meta name="application-name" content="Aimeos" />
+	<meta http-equiv="refresh" content="0;URL='/'" />
+	<meta name="robots" content="noindex" />
 
 <?php endif; ?>
 

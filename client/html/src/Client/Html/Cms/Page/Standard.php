@@ -55,7 +55,7 @@ class Standard
 	 * @category Developer
 	 */
 	private $subPartPath = 'client/html/cms/page/subparts';
-	private $subPartNames = ['contact'];
+	private $subPartNames = ['contact', 'cataloglist'];
 
 	private $tags = [];
 	private $expire;
@@ -130,36 +130,30 @@ class Standard
 			try
 			{
 				$html = '';
-
-				if( !isset( $this->view ) ) {
-					$view = $this->view = $this->getObject()->addData( $view, $this->tags, $this->expire );
-				}
+				$view = $this->view = $this->view ?? $this->getObject()->addData( $view, $this->tags, $this->expire );
 
 				foreach( $this->getSubClients() as $subclient ) {
 					$html .= $subclient->setView( $view )->getBody( $uid );
 				}
 				$view->pageBody = $html;
 
-				$html = $this->csrf( $view->render( $view->config( $tplconf, $default ) ) );
+				$html = $view->render( $view->config( $tplconf, $default ) );
 				$this->setCached( 'body', $uid, $prefixes, $confkey, $html, $this->tags, $this->expire );
 
-				return $html;
+				return $this->modifyBody( $html, $uid );
 			}
 			catch( \Aimeos\Client\Html\Exception $e )
 			{
-				$tplconf = 'client/html/cms/page/template-error';
 				$error = array( $context->getI18n()->dt( 'client', $e->getMessage() ) );
 				$view->pageErrorList = array_merge( $view->get( 'pageErrorList', [] ), $error );
 			}
 			catch( \Aimeos\Controller\Frontend\Exception $e )
 			{
-				$tplconf = 'client/html/cms/page/template-error';
 				$error = array( $context->getI18n()->dt( 'controller/frontend', $e->getMessage() ) );
 				$view->pageErrorList = array_merge( $view->get( 'pageErrorList', [] ), $error );
 			}
 			catch( \Aimeos\MShop\Exception $e )
 			{
-				$tplconf = 'client/html/cms/page/template-error';
 				$error = array( $context->getI18n()->dt( 'mshop', $e->getMessage() ) );
 				$view->pageErrorList = array_merge( $view->get( 'pageErrorList', [] ), $error );
 			}
@@ -223,10 +217,7 @@ class Standard
 			try
 			{
 				$html = '';
-
-				if( !isset( $this->view ) ) {
-					$view = $this->view = $this->getObject()->addData( $view, $this->tags, $this->expire );
-				}
+				$view = $this->view = $this->view ?? $this->getObject()->addData( $view, $this->tags, $this->expire );
 
 				foreach( $this->getSubClients() as $subclient ) {
 					$html .= $subclient->setView( $view )->getHeader( $uid );
@@ -403,13 +394,20 @@ class Standard
 		 * @param array List of domain names
 		 * @since 2021.04
 		 */
-		$domains = $context->getConfig()->get( 'client/html/cms/page/domains', ['media', 'text'] );
+		$domains = $context->getConfig()->get( 'client/html/cms/page/domains', ['text'] );
 
-		$page = $controller->uses( $domains )->find( '/' . trim( $view->param( 'path' ), '/' ) );
+		$path = '/' . trim( $view->request()->getUri()->getPath(), '/' );
 
-		$this->addMetaItems( $page, $expire, $tags );
+		if( $page = $controller->uses( $domains )->compare( '==', 'cms.url', $path )->search()->first() )
+		{
+			$this->addMetaItems( $page, $expire, $tags );
 
-		$view->pageCmsItem = $page;
+			$view->pageCmsItem = $page;
+			$view->pageContent = $page->getRefItems( 'text', 'content' )->map( function( $item ) {
+				$data = ( $json = json_decode( $item->getContent(), true ) ) ? $json['html'] : $item->getContent();
+				return '<div class="cms-content">' . $data . '</div>';
+			} )->all();
+		}
 
 		return parent::addData( $view, $tags, $expire );
 	}
@@ -423,17 +421,5 @@ class Standard
 	protected function getSubClientNames() : array
 	{
 		return $this->getContext()->getConfig()->get( $this->subPartPath, $this->subPartNames );
-	}
-
-
-	/**
-	 * Returns the passed HTML code with CSRF tokens replaced
-	 *
-	 * @return string HTML code
-	 */
-	protected function csrf( string $html ) : string
-	{
-		$csrf = $this->getView()->csrf();
-		return str_replace( ['%csrf.name%', '%csrf.value%'], [$csrf->name(), $csrf->value()], $html );
 	}
 }

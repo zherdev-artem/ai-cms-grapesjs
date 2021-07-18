@@ -14,7 +14,7 @@ $enc = $this->encoder();
 
 
 ?>
-<section class="aimeos cms-page" data-jsonurl="<?= $enc->attr( $this->link( 'client/jsonapi/url' ) ); ?>">
+<section class="aimeos cms-page container-fluid px-0" data-jsonurl="<?= $enc->attr( $this->link( 'client/jsonapi/url' ) ); ?>">
 
 	<?php if( isset( $this->pageErrorList ) ) : ?>
 		<ul class="error-list">
@@ -24,10 +24,8 @@ $enc = $this->encoder();
 		</ul>
 	<?php endif; ?>
 
-	<?php if( isset( $this->pageCmsItem ) ) : ?>
-		<?php foreach( $this->pageCmsItem->getRefItems( 'text', 'content' ) as $textItem ) : ?>
-			<?= $textItem->getContent() ?>
-		<?php endforeach ?>
-	<?php endif; ?>
+	<?php foreach( $this->get( 'pageContent', [] ) as $content ) : ?>
+		<?= $content ?>
+	<?php endforeach ?>
 
 </section>
