@@ -154,7 +154,7 @@ class Standard
 	 * @param string $type Text type to be returned
 	 * @return string Specified text type or label of the item
 	 */
-	public function getName( string $type = 'name' ) : string
+	public function getName( string $type = 'name', ?string $langId = NULL ) : string
 	{
 		if( ( $item = $this->getRefItems( 'text', $type )->first() ) !== null ) {
 			return $item->getContent();
